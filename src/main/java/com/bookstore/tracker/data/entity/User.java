@@ -3,6 +3,7 @@ package com.bookstore.tracker.data.entity;
 import com.bookstore.tracker.helper.Auditable;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Stephane Nganou
@@ -29,12 +30,23 @@ public class User extends Auditable<String> {
     @Column(name = "PASSWORD")
     private String password;
 
+    @OneToMany(mappedBy = "assignedUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Authority> roles;
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Authority> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Authority> roles) {
+        this.roles = roles;
     }
 
     public String getUserName() {

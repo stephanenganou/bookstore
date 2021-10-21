@@ -9,16 +9,13 @@ import javax.persistence.*;
  * @version 1.0
  */
 @Entity
-@Table(name = "AUTORITIES")
-public class Autority extends Auditable<String> {
+@Table(name = "AUTHORITY")
+public class Authority extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     private long id;
-
-    @Column(name = "USERNAME")
-    private String userName;
 
     @Column(name = "AUTH_GROUP")
     private String authGroup;
@@ -27,16 +24,20 @@ public class Autority extends Auditable<String> {
         return id;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User assignedUser;
+
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getAssignedUser() {
+        return assignedUser;
     }
 
-    public void setUserName(String username) {
-        this.userName = username;
+    public void setAssignedUser(User assignedUser) {
+        this.assignedUser = assignedUser;
     }
 
     public String getAuthGroup() {

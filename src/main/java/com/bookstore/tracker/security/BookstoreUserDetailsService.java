@@ -1,16 +1,13 @@
 package com.bookstore.tracker.security;
 
-import com.bookstore.tracker.data.dao.AutorityDao;
+import com.bookstore.tracker.data.dao.AuthorityDao;
 import com.bookstore.tracker.data.dao.UserDao;
-import com.bookstore.tracker.data.entity.Autority;
 import com.bookstore.tracker.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author Stephane Nganou
@@ -21,13 +18,13 @@ public class BookstoreUserDetailsService implements UserDetailsService {
 
     private final UserDao userDao;
 
-    private final AutorityDao autorityDao;
+    private final AuthorityDao authorityDao;
 
     @Autowired
-    public BookstoreUserDetailsService(UserDao userDao, AutorityDao autorityDao) {
+    public BookstoreUserDetailsService(UserDao userDao, AuthorityDao authorityDao) {
         super();
         this.userDao = userDao;
-        this.autorityDao = autorityDao;
+        this.authorityDao = authorityDao;
     }
 
     @Override
@@ -36,8 +33,7 @@ public class BookstoreUserDetailsService implements UserDetailsService {
         if (null == user) {
             throw new UsernameNotFoundException("cannot find username: " + username);
         }
-        List<Autority> userRoles = autorityDao.findByUserName(username);
 
-        return new BookstoreUserPrincipal(user, userRoles);
+        return new BookstoreUserPrincipal(user, user.getRoles());
     }
 }

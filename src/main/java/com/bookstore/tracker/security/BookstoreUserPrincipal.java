@@ -1,6 +1,6 @@
 package com.bookstore.tracker.security;
 
-import com.bookstore.tracker.data.entity.Autority;
+import com.bookstore.tracker.data.entity.Authority;
 import com.bookstore.tracker.data.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,9 +16,9 @@ public class BookstoreUserPrincipal implements UserDetails {
 
     private final User user;
 
-    private final List<Autority> userRoles;
+    private final List<Authority> userRoles;
 
-    public BookstoreUserPrincipal(User user, List<Autority> userRoles) {
+    public BookstoreUserPrincipal(User user, List<Authority> userRoles) {
         this.user = user;
         this.userRoles = userRoles;
     }
