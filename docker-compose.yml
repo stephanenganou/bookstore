@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  #Service 1: Database
+  mysql:
+    image: 'mysql:latest'
+    command: --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    ports:
+      - '3306:3306'
+    volumes:
+      - ../mysql-datavolume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=training
+      - MYSQL_DATABASE=training
+      - MYSQL_USER=appstest
+      - MYSQL_PASSWORD=training
+
+  #Service 2: Spring MVC App
+  webtrackerapp:
+    image: web_book_tracker_apps
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web_book_tracker_apps
+    volumes:
+      - ./terminal-adapter-dummy-files:/secrets
+    environment:
+      - MYSQL_ROOT_PASSWORD=training
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/web_book_tracker?useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=training
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql

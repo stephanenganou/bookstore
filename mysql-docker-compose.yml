@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  #Service 1: Database
+  mysql:
+    image: 'mysql:latest'
+    command: --default-authentication-plugin=mysql_native_password
+    restart: on-failure
+    ports:
+      - '3306:3306'
+    volumes:
+      - ../mysql-datavolume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=training
+      - MYSQL_DATABASE=training
+      - MYSQL_USER=appstest
+      - MYSQL_PASSWORD=training
