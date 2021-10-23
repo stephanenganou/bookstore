@@ -29,6 +29,9 @@ public class Book extends Auditable<String> {
     @Column(name = "PRICE")
     private float price;
 
+    public Book() {
+    }
+
     public Book(long id, String name, String description, String image, float price) {
         this.id = id;
         this.name = name;

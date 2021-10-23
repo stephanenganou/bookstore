@@ -23,6 +23,9 @@ public class BookViewMapping extends Auditable<String> {
     @Column(name = "USER_ID")
     private long userId;
 
+    public BookViewMapping() {
+    }
+
     public BookViewMapping(long id, long bookId, long userId) {
         this.id = id;
         this.bookId = bookId;
