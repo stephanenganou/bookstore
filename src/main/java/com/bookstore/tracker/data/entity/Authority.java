@@ -20,13 +20,27 @@ public class Authority extends Auditable<String> {
     @Column(name = "AUTH_GROUP")
     private String authGroup;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+    private User assignedUser;
+
+    public Authority() {
+    }
+
+    public Authority(long id, String authGroup, User assignedUser) {
+        this.id = id;
+        this.authGroup = authGroup;
+        this.assignedUser = assignedUser;
+    }
+
+    public Authority(String authGroup, User assignedUser) {
+        this.authGroup = authGroup;
+        this.assignedUser = assignedUser;
+    }
+
     public long getId() {
         return id;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User assignedUser;
 
     public void setId(long id) {
         this.id = id;

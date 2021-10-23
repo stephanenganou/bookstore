@@ -20,6 +20,8 @@
         </div>
     </div>
 
+    <br>
+
     <div id="container">
         <div id="content">
 
@@ -29,6 +31,8 @@
 
                 <input type="submit" value="Search" class="add-button"/>
             </form>
+            <br>
+            <hr>
             <!-- add our html table here -->
             <table class="table table-striped">
                 <tbody>
@@ -39,10 +43,11 @@
                         <th scope="col">Price</th>
                     </tr>
                     <tr th:each="book : ${bookList}">
-                        <img th:src="${book.getImage()}" />
-                        <td th:="${book.getName}"/>
-                        <td th:text="${book.getDescription()}"/>
-                        <td th:text="${customer.Price()}"/>
+                        <!--<td><span th:text="${flight.getFlightId()}">Flugnummer</span></td> -->
+                        <td><img th:src="${book.getImage()}"/></td>
+                        <td><span th:text="${book.getName()}"></span></td>
+                        <td><span th:text="${book.getDescription()}"></span></td>
+                        <td><span th:text="${book.getPrice()}"></span></td>
                         <td>
                             <a th:href="@{'/customer/showFormForUpdate/' + ${book.getId()}}">Edit</a>
                              |

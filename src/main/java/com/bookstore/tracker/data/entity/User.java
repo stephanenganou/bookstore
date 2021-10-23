@@ -33,6 +33,26 @@ public class User extends Auditable<String> {
     @OneToMany(mappedBy = "assignedUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Authority> roles;
 
+    public User() {
+    }
+
+    public User(long id, String userName, String firstName, String lastName, String password, List<Authority> roles) {
+        this.id = id;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(String userName, String firstName, String lastName, String password, List<Authority> roles) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.roles = roles;
+    }
+
     public long getId() {
         return id;
     }
