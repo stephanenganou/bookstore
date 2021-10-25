@@ -1,20 +1,21 @@
 package com.bookstore.tracker.service.book;
 
 import com.bookstore.tracker.data.dao.BookDao;
+import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Stephane Nganou
  * @version 1.0
  */
 @Service
-@Lazy
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
 
@@ -24,12 +25,33 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Book getBookById(long bookId) {
-        return bookDao.getById(bookId);
+    @Transactional
+    public BookDto getBookById(long bookId) {
+        Book foundBook = bookDao.getById(bookId);
+        return foundBook.convertToDto();
     }
 
     @Override
-    public List<Book> getAllAvailableBooks() {
-        return bookDao.findAll();
+    @Transactional
+    public List<BookDto> getAllAvailableBooks() {
+        return bookDao.findAll().stream()
+                .map(Book::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void deleteBookById(long bookId) {
+        bookDao.deleteById(bookId);
+    }
+
+    @Override
+    @Transactional
+    public Book saveBook(BookDto bookToSave) {
+        if (null != bookToSave) {
+            return bookDao.save(bookToSave.convertToBook());
+        } else {
+            return null;
+        }
     }
 }

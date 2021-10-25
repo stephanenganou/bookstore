@@ -1,5 +1,6 @@
 package com.bookstore.tracker.data.entity;
 
+import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.helper.Auditable;
 
 import javax.persistence.*;
@@ -45,6 +46,21 @@ public class Book extends Auditable<String> {
         this.description = description;
         this.image = image;
         this.price = price;
+    }
+
+    public BookDto convertToDto() {
+        return new BookDto(id, name, description, image, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public long getId() {

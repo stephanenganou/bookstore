@@ -1,5 +1,6 @@
 package com.bookstore.tracker.service.book;
 
+import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,11 @@ import java.util.List;
 @Service
 public interface BookService {
 
-    Book getBookById(long bookId);
+    BookDto getBookById(long bookId);
 
-    List<Book> getAllAvailableBooks();
+    List<BookDto> getAllAvailableBooks();
+
+    void deleteBookById(long bookId);
+
+    Book saveBook(BookDto bookToSave);
 }

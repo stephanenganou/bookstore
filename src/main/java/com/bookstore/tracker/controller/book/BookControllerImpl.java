@@ -1,14 +1,13 @@
 package com.bookstore.tracker.controller.book;
 
+import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
 import com.bookstore.tracker.service.book.BookService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -17,7 +16,8 @@ import java.util.List;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/book")
+@Slf4j
+@Lazy
 public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
@@ -28,10 +28,10 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/{bookId}")
-    public String getBookById(@PathVariable("bookId") long bookId, Model bookModel) {
-        Book foundBook = bookService.getBookById(bookId);
-        if(null != foundBook){
+    public String getBookById(long bookId, Model bookModel) {
+        log.info("getBookById with Id: {} and Model: {}", bookId, bookModel);
+        BookDto foundBook = bookService.getBookById(bookId);
+        if (null != foundBook) {
             bookModel.addAttribute("book", foundBook);
         }
 
@@ -39,23 +39,32 @@ public class BookControllerImpl implements BookController {
     }
 
     @Override
-    @GetMapping("/list")
     public String getBookList(Model bookModel) {
-
-        List<Book> bookList = bookService.getAllAvailableBooks();
-        bookModel.addAttribute("bookList", bookList);
+        log.info("getBookList with Model: {}", bookModel);
+        List<BookDto> bookList = bookService.getAllAvailableBooks();
+        if (null != bookList && bookList.size() > 0) {
+            bookModel.addAttribute("bookList", bookList);
+        }
 
         return "book-list";
     }
 
     @Override
-    public String deleteBookById(String bookId) {
-        return null;
+    public String deleteBookById(long bookId, Model bookModel) {
+        log.info("deleteBookById with Id: {} and Model: {}", bookId, bookModel);
+        bookService.deleteBookById(bookId);
+
+        return getBookList(bookModel);
     }
 
     @Override
-    @PostMapping("/save")
-    public String saveBook() {
-        return null;
+    public String saveBook(BookDto book, Model bookModel) {
+        log.info("saveBook with book: {} and Model: {}", book, bookModel);
+        Book savedBook = bookService.saveBook(book);
+        if (null != savedBook) {
+            bookModel.addAttribute("success", true);
+        }
+
+        return "redirect:/book/list";
     }
 }
