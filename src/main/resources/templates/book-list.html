@@ -10,6 +10,9 @@
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        error {color:red}
+    </style>
 </head>
 
 <body>
@@ -25,11 +28,18 @@
     <div id="container">
         <div id="content">
 
-            <!-- import file -->
-            <form th:action="@{/book/uploadfile}" th:method="GET">
-                Search customer: <input type="text" name="theSearchName" />
+            <!-- Check if error -->
+            <div th:if="${isError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
+                <p th:inline="text">[[${errorMessage}]]</p>
+            </div>
 
-                <input type="submit" value="Search" class="add-button"/>
+            <!-- import file -->
+            <form method="POST" th:action="@{/book/uploadfile}" enctype="multipart/form-data">
+                <div class="form-group mt-3">
+                    <label for="file">Select a CSV file</label>
+                    <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
+                </div>
+                <button type="submit" class="btn btn-primary">Import Books</button>
             </form>
             <br>
             <hr>
@@ -49,9 +59,9 @@
                         <td><span th:text="${book.getDescription()}"></span></td>
                         <td><span th:text="${book.getPrice()}"></span></td>
                         <td>
-                            <a th:href="@{'/customer/showFormForUpdate/' + ${book.getId()}}">Edit</a>
+                            <a th:href="@{'/book/' + ${book.getId()}}">Edit</a>
                              |
-                            <a th:href="@{'/customer/delete/' + ${book.getId()}}"
+                            <a th:href="@{'/book/' + ${book.getId()}}"
                                 onclick="if(!(confirm('Are you sure you want to delete this book?'))) return false;"
                             >Delete</a>
                         </td>

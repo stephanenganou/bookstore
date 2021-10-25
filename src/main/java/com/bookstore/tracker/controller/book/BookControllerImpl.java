@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,7 +30,12 @@ public class BookControllerImpl implements BookController {
     @Override
     @GetMapping("/{bookId}")
     public String getBookById(@PathVariable("bookId") long bookId, Model bookModel) {
-        return null;
+        Book foundBook = bookService.getBookById(bookId);
+        if(null != foundBook){
+            bookModel.addAttribute("book", foundBook);
+        }
+
+        return "book-update";
     }
 
     @Override
@@ -42,6 +46,11 @@ public class BookControllerImpl implements BookController {
         bookModel.addAttribute("bookList", bookList);
 
         return "book-list";
+    }
+
+    @Override
+    public String deleteBookById(String bookId) {
+        return null;
     }
 
     @Override

@@ -10,5 +10,7 @@ public interface BookController {
 
     String getBookList(Model bookModel);
 
+    String deleteBookById(String bookId);
+
     String saveBook();
 }
