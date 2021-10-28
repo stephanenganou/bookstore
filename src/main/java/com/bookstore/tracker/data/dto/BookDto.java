@@ -43,6 +43,17 @@ public class BookDto {
         return new Book(id, name, description, image, price);
     }
 
+    @Override
+    public String toString() {
+        return "BookDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public long getId() {
         return id;
     }

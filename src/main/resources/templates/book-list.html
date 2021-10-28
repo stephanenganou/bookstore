@@ -26,10 +26,13 @@
     <br>
 
     <div id="container">
-        <div th:if="${success != null}">
-		<span id="successMessage">
-			<p class="btn btn-success">The book has been successfully saved</p>
-		</span>
+        <div th:if="${message != null}">
+            <span th:if="${message.getcssClass() == 'success'}" id="successMessage">
+                <p class="btn btn-success" th:text="${message.getMessage()}"></p>
+            </span>
+            <span th:if="${message.getcssClass() != 'success'}" id="errorMessage">
+                <p class="btn btn-danger" th:text="${message.getMessage()}"></p>
+            </span>
         </div>
 
         <div id="content">
@@ -40,7 +43,7 @@
             </div>
 
             <!-- import file -->
-            <form method="POST" th:action="@{/book/uploadfile}" enctype="multipart/form-data">
+            <form method="POST" th:action="@{/data/upload}" enctype="multipart/form-data">
                 <div class="form-group mt-3">
                     <label for="file">Select a CSV file</label>
                     <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
@@ -60,7 +63,7 @@
                     </tr>
                     <tr th:each="book : ${bookList}">
                         <!--<td><span th:text="${flight.getFlightId()}">Flugnummer</span></td> -->
-                        <td><img th:src="${book.getImage()}" th:alt="book_${book.getId()}"/></td>
+                        <td><img th:src="${book.getImage()}" th:alt="${'book_' + book.getId()}"/></td>
                         <td><span th:text="${book.getName()}"></span></td>
                         <td><span th:text="${book.getDescription()}"></span></td>
                         <td><span th:text="${book.getPrice()}"></span></td>

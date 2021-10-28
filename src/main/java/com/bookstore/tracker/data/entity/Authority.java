@@ -21,7 +21,7 @@ public class Authority extends Auditable<String> {
     private String authGroup;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id",nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User assignedUser;
 
     public Authority() {
@@ -36,6 +36,15 @@ public class Authority extends Auditable<String> {
     public Authority(String authGroup, User assignedUser) {
         this.authGroup = authGroup;
         this.assignedUser = assignedUser;
+    }
+
+    @Override
+    public String toString() {
+        return "Authority{" +
+                "id=" + id +
+                ", authGroup='" + authGroup + '\'' +
+                ", assignedUser=" + assignedUser +
+                '}';
     }
 
     public long getId() {

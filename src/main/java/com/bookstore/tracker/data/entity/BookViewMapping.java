@@ -37,6 +37,15 @@ public class BookViewMapping extends Auditable<String> {
         this.userId = userId;
     }
 
+    @Override
+    public String toString() {
+        return "BookViewMapping{" +
+                "id=" + id +
+                ", bookId=" + bookId +
+                ", userId=" + userId +
+                '}';
+    }
+
     public long getId() {
         return id;
     }

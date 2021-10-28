@@ -1,19 +1,19 @@
 package com.bookstore.tracker.controller.datamanagement;
 
 import com.bookstore.tracker.data.dto.ResponseMessageDto;
-import com.bookstore.tracker.helper.CSVHelper;
 import com.bookstore.tracker.service.datamanagement.DataManagementService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@Slf4j
+@RequestMapping("/data")
 public class CSVControllerImpl implements CSVController {
 
     private final DataManagementService dataManagementService;
@@ -23,26 +23,42 @@ public class CSVControllerImpl implements CSVController {
         this.dataManagementService = dataManagementService;
     }
 
+    @PostMapping("/upload")
     @Override
-    public ResponseEntity<ResponseMessageDto> uploadFile(MultipartFile file) {
+    public String uploadFile(@RequestParam("file") MultipartFile file, Model bookModel) {
+        String pageToRedirectTo = "redirect:/book/list";
         String message;
+        log.info("File to String: {}; and Contain Type: {}", file, file.getContentType());
+        try {
+            dataManagementService.save(file);
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            log.info("hasCSVFormat: {} and message: {}", true, message);
+            setMessageToMode(new ResponseMessageDto(message, "success"),
+                    bookModel);
 
-        if (CSVHelper.hasCSVFormat(file)) {
-            try {
-                dataManagementService.save(file);
-
-                message = "Uploaded the file successfully: " + file.getOriginalFilename();
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessageDto(message));
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessageDto(message));
-            }
+            return pageToRedirectTo;
+            //return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessageDto(message));
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            log.info("hasCSVFormat: {} and message: {}", true, message);
+            setMessageToMode(new ResponseMessageDto(message, "danger"),
+                    bookModel);
+            e.printStackTrace();
+            return pageToRedirectTo;
+            //return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessageDto(message));
         }
 
+        /*
         message = "Please upload a csv file!";
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessageDto(message));
+        log.info("hasCSVFormat: {} and message: {}", false, message);
+        setMessageToMode(new ResponseMessageDto(message, "warning"), bookModel);
+        return pageToRedirectTo;
+         */
+        //return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessageDto(message));
     }
 
+    /*
+    @GetMapping("/download")
     @Override
     public ResponseEntity<Resource> getFile() {
         String filename = "books.csv";
@@ -52,5 +68,10 @@ public class CSVControllerImpl implements CSVController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
                 .contentType(MediaType.parseMediaType("application/csv"))
                 .body(file);
+    }
+     */
+
+    private void setMessageToMode(ResponseMessageDto message, Model model) {
+        model.addAttribute("message", message);
     }
 }

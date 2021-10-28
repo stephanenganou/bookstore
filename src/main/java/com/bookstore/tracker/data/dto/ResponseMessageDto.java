@@ -9,8 +9,28 @@ public class ResponseMessageDto {
     @NotNull(message = "this can not be null")
     private String message;
 
-    public ResponseMessageDto(@NotBlank(message = "This can not be blank") @NotNull(message = "this can not be null") String message) {
+    private String cssClass;
+
+    public ResponseMessageDto(@NotBlank(message = "This can not be blank") @NotNull(message = "this can not be null") String message,
+                              String cssClass) {
         this.message = message;
+        this.cssClass = cssClass;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseMessageDto{" +
+                "message='" + message + '\'' +
+                ", cssClass='" + cssClass + '\'' +
+                '}';
+    }
+
+    public String getCssClass() {
+        return cssClass;
+    }
+
+    public void setCssClass(String cssClass) {
+        this.cssClass = cssClass;
     }
 
     public String getMessage() {
