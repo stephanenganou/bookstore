@@ -3,6 +3,10 @@ package com.bookstore.tracker.data.dto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 public class ResponseMessageDto {
 
     @NotBlank(message = "This can not be blank")

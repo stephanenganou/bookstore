@@ -5,6 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/book")
 public interface BookController {

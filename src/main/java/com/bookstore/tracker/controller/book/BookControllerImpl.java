@@ -32,7 +32,7 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/{bookId}")
     @Override
     public String getBookById(long bookId, Model bookModel) {
-        log.info("getBookById with Id: {} and Model: {}", bookId, bookModel);
+        log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
         BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
             bookModel.addAttribute("book", foundBook);
@@ -44,7 +44,7 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/list")
     @Override
     public String getBookList(Model bookModel) {
-        log.info("getBookList with Model: {}", bookModel);
+        log.info("GetBookList with Model: {}", bookModel);
         List<BookDto> bookList = bookService.getAllAvailableBooks();
         if (null != bookList && bookList.size() > 0) {
             bookModel.addAttribute("bookList", bookList);
@@ -56,7 +56,7 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/delete/{bookId}")
     @Override
     public String deleteBookById(long bookId, Model bookModel) {
-        log.info("deleteBookById with Id: {} and Model: {}", bookId, bookModel);
+        log.info("DeleteBookById with Id: {} and Model: {}", bookId, bookModel);
         bookService.deleteBookById(bookId);
 
         return getBookList(bookModel);
@@ -65,7 +65,7 @@ public class BookControllerImpl implements BookController {
     @PostMapping("/save")
     @Override
     public String saveBook(BookDto book, Model bookModel) {
-        log.info("saveBook with book: {} and Model: {}", book, bookModel);
+        log.info("SaveBook with book: {} and Model: {}", book, bookModel);
         Book savedBook = bookService.saveBook(book);
         if (null != savedBook) {
             bookModel.addAttribute("success", true);

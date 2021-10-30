@@ -6,6 +6,10 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 public class BookDto {
 
     private long id;

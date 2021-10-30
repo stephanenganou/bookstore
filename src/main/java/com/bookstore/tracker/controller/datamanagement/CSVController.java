@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 @Controller
 @RequestMapping("/data")
 public interface CSVController {

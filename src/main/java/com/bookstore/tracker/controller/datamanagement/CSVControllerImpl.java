@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 @Controller
 @Slf4j
 @RequestMapping("/data")
@@ -28,11 +32,9 @@ public class CSVControllerImpl implements CSVController {
     public String uploadFile(@RequestParam("file") MultipartFile file, Model bookModel) {
         String pageToRedirectTo = "redirect:/book/list";
         String message;
-        log.info("File to String: {}; and Contain Type: {}", file, file.getContentType());
         try {
             dataManagementService.save(file);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            log.info("hasCSVFormat: {} and message: {}", true, message);
             setMessageToMode(new ResponseMessageDto(message, "success"),
                     bookModel);
 
