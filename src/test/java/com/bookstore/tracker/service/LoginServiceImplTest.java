@@ -34,7 +34,7 @@ public class LoginServiceImplTest {
     }
 
     @Test
-    void whenIsNotBockedDomain_WithUnvalidEmail_thenReturnTrue() {
+    void whenIsNotBockedDomain_WithUnValidEmail_thenReturnTrue() {
         boolean isDomainBlocked = loginService.isNotBockedDomain(UNVALID_EMAIL);
 
         assertThat(isDomainBlocked, is(true));
