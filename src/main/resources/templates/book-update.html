@@ -53,7 +53,7 @@
             <tr>
                 <td><label>Price:</label></td>
                 <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}" />
-                <td><input type="number" name="price" id="price" th:field="*{price}"/></td>
+                <td><input type="text" name="price" id="price" th:field="*{price}"/></td>
             </tr>
             <tr>
                 <td><label></label></td>
