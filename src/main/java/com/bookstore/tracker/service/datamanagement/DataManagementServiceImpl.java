@@ -65,7 +65,7 @@ public class DataManagementServiceImpl implements DataManagementService {
         if (bookDao.findByName(bookRecord.getName()).isPresent()) {
             log.info("The Book with the name: {} does exist already!", bookRecord.getName());
         } else {
-            Book savedBook = bookDao.save(bookRecord);
+            bookDao.save(bookRecord);
             log.info("Record saved!");
         }
     }
