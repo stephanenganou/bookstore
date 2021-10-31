@@ -14,4 +14,5 @@ import java.util.Optional;
 public interface BookDao extends JpaRepository<Book, Long> {
 
     Optional<Book> findByName(String name);
+
 }

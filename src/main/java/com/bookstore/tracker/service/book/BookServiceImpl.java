@@ -48,8 +48,14 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book saveBook(BookDto bookToSave) {
-        if (null != bookToSave) {
-            return bookDao.save(bookToSave.convertToBook());
+        Book book = bookDao.getById(bookToSave.getId());
+        if (null != book) {
+            book.setName(bookToSave.getName());
+            book.setDescription(bookToSave.getDescription());
+            book.setImage(bookToSave.getImage());
+            book.setPrice(bookToSave.getPrice());
+
+            return bookDao.save(book);
         } else {
             return null;
         }
