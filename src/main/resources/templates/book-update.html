@@ -63,6 +63,27 @@
         </table>
 
     </form>
+
+    <br>
+    <hr>
+
+    <h3 style="align-content: center">Recommended Book</h3>
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <th scope="col">Book Name</th>
+            <th scope="col">Price</th>
+        </tr>
+        <tr th:each="recommendedBook : ${recommendedBooks}">
+            <td><a th:href="@{'/book/' + ${recommendedBook.getId()}}"
+                   th:text="${recommendedBook.getName()}"></a>
+            </td>
+            <td><span th:text="${recommendedBook.getPrice()}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
     <div style="clear; both"></div>
     <p>
         <a href="/book/list">Back to Book List</a>
