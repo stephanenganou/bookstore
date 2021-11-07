@@ -9,9 +9,7 @@ import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +33,7 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/{bookId}")
     @Override
-    public String getBookById(long bookId, Model bookModel) {
+    public String getBookById(@PathVariable("bookId") long bookId, Model bookModel) {
         log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
         BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
@@ -64,7 +62,7 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/delete/{bookId}")
     @Override
-    public String deleteBookById(long bookId, Model bookModel) {
+    public String deleteBookById(@PathVariable("bookId") long bookId, Model bookModel) {
         log.info("DeleteBookById with Id: {} and Model: {}", bookId, bookModel);
         bookService.deleteBookById(bookId);
 
@@ -73,7 +71,7 @@ public class BookControllerImpl implements BookController {
 
     @PostMapping("/save")
     @Override
-    public String saveBook(BookDto book, Model bookModel) {
+    public String saveBook(@ModelAttribute("book") BookDto book, Model bookModel) {
         log.info("SaveBook with book: {} and Model: {}", book, bookModel);
         Book savedBook = bookService.saveBook(book);
         if (null != savedBook) {

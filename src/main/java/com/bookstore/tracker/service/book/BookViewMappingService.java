@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Service
 public interface BookViewMappingService {
+
     void writeFileLocally(final String fileName,
                           final List<BookViewMapping> dataList) throws IOException;
 }

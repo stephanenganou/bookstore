@@ -10,18 +10,13 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/book")
 public interface BookController {
 
-    @GetMapping("/{bookId}")
-    String getBookById(@PathVariable("bookId") long bookId, Model bookModel);
+    String getBookById(long bookId, Model bookModel);
 
-    @GetMapping("/list")
     String getBookList(Model bookModel);
 
-    @GetMapping("/delete/{bookId}")
-    String deleteBookById(@PathVariable("bookId") long bookId, Model bookModel);
+    String deleteBookById(long bookId, Model bookModel);
 
-    @PostMapping("/save")
-    String saveBook(@ModelAttribute("book") BookDto book, Model bookModel);
+    String saveBook(BookDto book, Model bookModel);
 }

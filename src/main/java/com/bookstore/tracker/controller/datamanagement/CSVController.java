@@ -12,10 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @version 1.0
  */
 @Controller
-@RequestMapping("/data")
 public interface CSVController {
 
-    @PostMapping("/upload")
     String uploadFile(@RequestParam("file") MultipartFile file, Model bookModel);
 
     /*

@@ -16,8 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @version 1.0
  */
 @Controller
-@Slf4j
 @RequestMapping("/data")
+@Slf4j
 public class CSVControllerImpl implements CSVController {
 
     private final DataManagementService dataManagementService;
