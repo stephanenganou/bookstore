@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         boolean isBlocked = true;
 
         if (!userName.isEmpty() && isEmailValid(userName)) {
-            log.info(userName);
+            log.info("The inserted userName is: {}", userName);
             isBlocked = userName.toLowerCase().contains(POINT_COM_STRING);
         }
 
