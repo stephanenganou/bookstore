@@ -1,6 +1,8 @@
 package com.bookstore.tracker.security.config;
 
 import com.bookstore.tracker.security.BookstoreUserDetailsService;
+import com.bookstore.tracker.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +12,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -21,20 +26,36 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Slf4j
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static int PASSWORD_ENCODER_LENGTH = 11;
+    private static final int PASSWORD_ENCODER_LENGTH = 11;
     private final BookstoreUserDetailsService bookstoreUserDetailsService;
+    private final UserService userService;
 
     @Autowired
-    public ApplicationSecurityConfig(BookstoreUserDetailsService bookstoreUserDetailsService) {
+    public ApplicationSecurityConfig(final BookstoreUserDetailsService bookstoreUserDetailsService,
+                                     final UserService userService) {
         super();
         this.bookstoreUserDetailsService = bookstoreUserDetailsService;
+        this.userService = userService;
     }
 
     @Bean
     public DaoAuthenticationProvider getAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider() {
+            @Override
+            public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
+                if (userService.isNotBockedDomain(authentication.getName())) {
+                    log.error("Invalid username: {}", authentication.getName());
+                    throw new UsernameNotFoundException("Invalid username: " + authentication.getName());
+                } else {
+                    return super.authenticate(authentication);
+                }
+            }
+        };
+
         authenticationProvider.setUserDetailsService(bookstoreUserDetailsService);
         authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(PASSWORD_ENCODER_LENGTH));
         authenticationProvider.setAuthoritiesMapper(getAuthorityMapper());
