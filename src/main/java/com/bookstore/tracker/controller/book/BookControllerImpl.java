@@ -3,7 +3,9 @@ package com.bookstore.tracker.controller.book;
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
 import com.bookstore.tracker.service.book.BookService;
+import com.bookstore.tracker.service.book.SimilarityService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,12 @@ import java.util.List;
 public class BookControllerImpl implements BookController {
 
     private final BookService bookService;
+    private final SimilarityService similarityService;
 
     @Autowired
-    public BookControllerImpl(BookService bookService) {
+    public BookControllerImpl(final BookService bookService, final SimilarityService similarityService) {
         this.bookService = bookService;
+        this.similarityService = similarityService;
     }
 
     @GetMapping("/{bookId}")

@@ -2,7 +2,9 @@ package com.bookstore.tracker.service.book;
 
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 

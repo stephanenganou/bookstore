@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,7 +33,7 @@ public class DataManagementServiceImpl implements DataManagementService {
     }
 
     @Override
-    public void save(MultipartFile multipartFile) throws IOException {
+    public void save(MultipartFile multipartFile) {
         if (DataManagementUtil.isMultipartFileValid(multipartFile)) {
             try {
                 List<Record> csvRecordList = DataManagementUtil.getRecordsFromCsvFile(multipartFile);

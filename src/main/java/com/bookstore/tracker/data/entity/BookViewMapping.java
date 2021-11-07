@@ -26,13 +26,13 @@ public class BookViewMapping extends Auditable<String> {
     public BookViewMapping() {
     }
 
-    public BookViewMapping(long id, long bookId, long userId) {
-        this.id = id;
+    public BookViewMapping(long bookId, long userId) {
         this.bookId = bookId;
         this.userId = userId;
     }
 
-    public BookViewMapping(long bookId, long userId) {
+    public BookViewMapping(long id, long bookId, long userId) {
+        this.id = id;
         this.bookId = bookId;
         this.userId = userId;
     }
