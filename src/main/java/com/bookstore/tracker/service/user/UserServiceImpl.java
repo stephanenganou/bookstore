@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private static final Pattern PATTERN = Pattern.compile(EMAIL_PATTERN);
 
     @Override
-    public boolean isNotBockedDomain(String userName) {
+    public boolean isNotBockedDomain(final String userName) {
         boolean isBlocked = true;
 
         if (!userName.isEmpty() && isEmailValid(userName)) {

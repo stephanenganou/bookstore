@@ -55,7 +55,7 @@ public class SimilarityServiceImpl implements SimilarityService {
         return null;
     }
 
-    private List<RecommendedItem> getBookRecommendations(long bookId, int numberOfSimilarity) throws IOException, TasteException {
+    private List<RecommendedItem> getBookRecommendations(final long bookId, final int numberOfSimilarity) throws IOException, TasteException {
 
         DataModel dataModel = new FileDataModel(new File(fileNamePath));
 

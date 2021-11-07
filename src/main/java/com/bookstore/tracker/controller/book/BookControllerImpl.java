@@ -26,14 +26,15 @@ public class BookControllerImpl implements BookController {
     private final SimilarityService similarityService;
 
     @Autowired
-    public BookControllerImpl(final BookService bookService, final SimilarityService similarityService) {
+    public BookControllerImpl(final BookService bookService,
+                              final SimilarityService similarityService) {
         this.bookService = bookService;
         this.similarityService = similarityService;
     }
 
     @GetMapping("/{bookId}")
     @Override
-    public String getBookById(@PathVariable("bookId") long bookId, Model bookModel) {
+    public String getBookById(@PathVariable("bookId") final long bookId, Model bookModel) {
         log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
         BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
@@ -62,7 +63,7 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/delete/{bookId}")
     @Override
-    public String deleteBookById(@PathVariable("bookId") long bookId, Model bookModel) {
+    public String deleteBookById(@PathVariable("bookId") final long bookId, Model bookModel) {
         log.info("DeleteBookById with Id: {} and Model: {}", bookId, bookModel);
         bookService.deleteBookById(bookId);
 
