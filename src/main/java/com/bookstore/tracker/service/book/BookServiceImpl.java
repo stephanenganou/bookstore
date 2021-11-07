@@ -31,7 +31,9 @@ public class BookServiceImpl implements BookService {
     private final BookViewMappingDao bookViewMappingDao;
 
     @Autowired
-    public BookServiceImpl(BookDao bookDao, UserService userService, BookViewMappingDao bookViewMappingDao) {
+    public BookServiceImpl(final BookDao bookDao, final UserService userService,
+                           final BookViewMappingDao bookViewMappingDao) {
+
         this.bookDao = bookDao;
         this.userService = userService;
         this.bookViewMappingDao = bookViewMappingDao;
@@ -39,7 +41,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookDto getBookById(long bookId) {
+    public BookDto getBookById(final long bookId) {
         Book foundBook = bookDao.getById(bookId);
         return foundBook.convertToDto();
     }
@@ -54,13 +56,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void deleteBookById(long bookId) {
+    public void deleteBookById(final long bookId) {
         bookDao.deleteById(bookId);
     }
 
     @Override
     @Transactional
-    public Book saveBook(BookDto bookToSave) {
+    public Book saveBook(final BookDto bookToSave) {
         Book book = bookDao.getById(bookToSave.getId());
         if (null != book) {
             book.setName(bookToSave.getName());
@@ -75,7 +77,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void mapBookViewByUser(long bookId) {
+    public void mapBookViewByUser(final long bookId) {
         User loggedUser = userService.getLoggedUser();
 
         if (null != loggedUser) {
@@ -85,7 +87,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addRecommendationsForBook(List<RecommendedItem> RecommendedItems, Model bookModel) {
+    public void addRecommendationsForBook(final List<RecommendedItem> RecommendedItems, Model bookModel) {
         List<BookDto> foundBookList = new ArrayList<>();
 
         for (RecommendedItem recommendedItem : RecommendedItems) {

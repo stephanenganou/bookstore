@@ -21,13 +21,13 @@ public final class DataManagementUtil {
 
     private static final String[] VALID_HEADERS = {"text/.csv", "application/vnd.ms-excel"};
 
-    public static boolean isMultipartFileValid(MultipartFile multipartFile) {
+    public static boolean isMultipartFileValid(final MultipartFile multipartFile) {
         log.info("File Contain Type: {}", multipartFile.getContentType());
         return Arrays.stream(VALID_HEADERS).anyMatch
                 (s -> Objects.requireNonNull(multipartFile.getContentType()).contains(s));
     }
 
-    public static List<Record> getRecordsFromCsvFile(MultipartFile multipartFile) throws IOException {
+    public static List<Record> getRecordsFromCsvFile(final MultipartFile multipartFile) throws IOException {
         InputStream inputStream = multipartFile.getInputStream();
         CsvParserSettings csvParserSettings = new CsvParserSettings();
         csvParserSettings.setHeaderExtractionEnabled(true);

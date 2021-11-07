@@ -29,7 +29,7 @@ public class CSVControllerImpl implements CSVController {
 
     @PostMapping("/upload")
     @Override
-    public String uploadFile(@RequestParam("file") MultipartFile file, Model bookModel) {
+    public String uploadFile(@RequestParam("file") final MultipartFile file, Model bookModel) {
         String pageToRedirectTo = "redirect:/book/list";
         String message;
         try {

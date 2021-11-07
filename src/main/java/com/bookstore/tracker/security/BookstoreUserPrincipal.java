@@ -18,7 +18,7 @@ public class BookstoreUserPrincipal implements UserDetails {
 
     private final List<Authority> userRoles;
 
-    public BookstoreUserPrincipal(User user, List<Authority> userRoles) {
+    public BookstoreUserPrincipal(final User user, final List<Authority> userRoles) {
         this.user = user;
         this.userRoles = userRoles;
     }
