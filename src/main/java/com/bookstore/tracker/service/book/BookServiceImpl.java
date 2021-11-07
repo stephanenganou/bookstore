@@ -1,8 +1,14 @@
 package com.bookstore.tracker.service.book;
 
 import com.bookstore.tracker.data.dao.BookDao;
+import com.bookstore.tracker.data.dao.BookViewMappingDao;
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
+import com.bookstore.tracker.data.entity.BookViewMapping;
+import com.bookstore.tracker.data.entity.User;
+import com.bookstore.tracker.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +23,18 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Service
+@Slf4j
 public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
+    private final UserService userService;
+    private final BookViewMappingDao bookViewMappingDao;
 
     @Autowired
-    public BookServiceImpl(BookDao bookDao) {
+    public BookServiceImpl(BookDao bookDao, UserService userService, BookViewMappingDao bookViewMappingDao) {
         this.bookDao = bookDao;
+        this.userService = userService;
+        this.bookViewMappingDao = bookViewMappingDao;
     }
 
     @Override
@@ -61,5 +72,29 @@ public class BookServiceImpl implements BookService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void mapBookViewByUser(long bookId) {
+        User loggedUser = userService.getLoggedUser();
+
+        if (null != loggedUser) {
+            log.info("User is authenticated");
+            bookViewMappingDao.save(new BookViewMapping(bookId, loggedUser.getId()));
+        }
+    }
+
+    @Override
+    public void addRecommendationsForBook(List<RecommendedItem> RecommendedItems, Model bookModel) {
+        List<BookDto> foundBookList = new ArrayList<>();
+
+        for (RecommendedItem recommendedItem : RecommendedItems) {
+            Book foundBook = bookDao.getById(recommendedItem.getItemID());
+            if (null != foundBook) {
+                foundBookList.add(foundBook.convertToDto());
+            }
+        }
+
+        bookModel.addAttribute("recommendedBooks", foundBookList);
     }
 }

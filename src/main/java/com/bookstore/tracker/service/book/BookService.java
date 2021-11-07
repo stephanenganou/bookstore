@@ -22,4 +22,8 @@ public interface BookService {
     void deleteBookById(long bookId);
 
     Book saveBook(BookDto bookToSave);
+
+    void mapBookViewByUser(long bookId);
+
+    void addRecommendationsForBook(List<RecommendedItem> bookRecommendations, Model bookModel);
 }

@@ -2,7 +2,7 @@ package com.bookstore.tracker.security;
 
 import com.bookstore.tracker.data.dao.UserDao;
 import com.bookstore.tracker.data.entity.User;
-import com.bookstore.tracker.service.login.LoginService;
+import com.bookstore.tracker.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Service;
 public class BookstoreUserDetailsService implements UserDetailsService {
 
     private final UserDao userDao;
-    private final LoginService loginService;
+    private final UserService userService;
 
     @Autowired
-    public BookstoreUserDetailsService(UserDao userDao, LoginService loginService) {
+    public BookstoreUserDetailsService(UserDao userDao, UserService userService) {
         super();
         this.userDao = userDao;
-        this.loginService = loginService;
+        this.userService = userService;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class BookstoreUserDetailsService implements UserDetailsService {
         if (null == user) {
             throw new UsernameNotFoundException("cannot find username: " + username);
         }
-        if (loginService.isNotBockedDomain(username)) {
+        if (userService.isNotBockedDomain(username)) {
             throw new UsernameNotFoundException("Invalid username: " + username);
         }
 

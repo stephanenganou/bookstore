@@ -40,6 +40,11 @@ public class BookControllerImpl implements BookController {
         BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
             bookModel.addAttribute("book", foundBook);
+            bookService.mapBookViewByUser(bookId);
+            List<RecommendedItem> recommendedItems = similarityService.bookSimilarity(bookId, 5);
+            log.info("Recommendations for bookId: {} are: {}", bookId, recommendedItems);
+
+            bookService.addRecommendationsForBook(recommendedItems, bookModel);
         }
 
         return "book-update";
