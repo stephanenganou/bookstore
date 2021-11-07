@@ -1,5 +1,7 @@
 package com.bookstore.tracker.data.dto;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -7,6 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author Stephane Nganou
  * @version 1.0
  */
+@Data
 public class ResponseMessageDto {
 
     @NotBlank(message = "This can not be blank")
@@ -27,22 +30,6 @@ public class ResponseMessageDto {
                 "message='" + message + '\'' +
                 ", cssClass='" + cssClass + '\'' +
                 '}';
-    }
-
-    public String getCssClass() {
-        return cssClass;
-    }
-
-    public void setCssClass(String cssClass) {
-        this.cssClass = cssClass;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
 }

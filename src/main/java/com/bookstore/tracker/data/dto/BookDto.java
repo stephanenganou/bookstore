@@ -1,6 +1,7 @@
 package com.bookstore.tracker.data.dto;
 
 import com.bookstore.tracker.data.entity.Book;
+import lombok.Data;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author Stephane Nganou
  * @version 1.0
  */
+@Data
 public class BookDto {
 
     private long id;
@@ -56,45 +58,5 @@ public class BookDto {
                 ", image='" + image + '\'' +
                 ", price=" + price +
                 '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
     }
 }

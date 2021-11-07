@@ -1,6 +1,7 @@
 package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.helper.Auditable;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "AUTHORITY")
+@Data
 public class Authority extends Auditable<String> {
 
     @Id
@@ -45,29 +47,5 @@ public class Authority extends Auditable<String> {
                 ", authGroup='" + authGroup + '\'' +
                 ", assignedUser=" + assignedUser +
                 '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getAssignedUser() {
-        return assignedUser;
-    }
-
-    public void setAssignedUser(User assignedUser) {
-        this.assignedUser = assignedUser;
-    }
-
-    public String getAuthGroup() {
-        return authGroup;
-    }
-
-    public void setAuthGroup(String authGroup) {
-        this.authGroup = authGroup;
     }
 }
