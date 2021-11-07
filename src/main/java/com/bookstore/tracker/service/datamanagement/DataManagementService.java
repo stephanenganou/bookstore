@@ -11,5 +11,6 @@ import java.io.IOException;
  */
 @Service
 public interface DataManagementService {
+
     void save(MultipartFile file) throws IOException;
 }
