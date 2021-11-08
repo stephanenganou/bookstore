@@ -1,7 +1,9 @@
 package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.helper.Auditable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "USER")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends Auditable<String> {
 
     @Id
@@ -34,18 +38,6 @@ public class User extends Auditable<String> {
 
     @OneToMany(mappedBy = "assignedUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Authority> roles;
-
-    public User() {
-    }
-
-    public User(long id, String userName, String firstName, String lastName, String password, List<Authority> roles) {
-        this.id = id;
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.roles = roles;
-    }
 
     public User(String userName, String firstName, String lastName, String password, List<Authority> roles) {
         this.userName = userName;

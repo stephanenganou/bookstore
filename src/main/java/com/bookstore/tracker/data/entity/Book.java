@@ -2,7 +2,9 @@ package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.helper.Auditable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -13,6 +15,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "BOOK")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book extends Auditable<String> {
 
     @Id
@@ -31,17 +35,6 @@ public class Book extends Auditable<String> {
 
     @Column(name = "PRICE")
     private float price;
-
-    public Book() {
-    }
-
-    public Book(long id, String name, String description, String image, float price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-    }
 
     public Book(String name, String description, String image, float price) {
         this.name = name;

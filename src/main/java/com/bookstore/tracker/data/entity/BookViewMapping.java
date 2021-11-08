@@ -1,7 +1,9 @@
 package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.helper.Auditable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -12,6 +14,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "BOOKVIEWMAPPING")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookViewMapping extends Auditable<String> {
 
     @Id
@@ -25,16 +29,7 @@ public class BookViewMapping extends Auditable<String> {
     @Column(name = "USER_ID")
     private long userId;
 
-    public BookViewMapping() {
-    }
-
     public BookViewMapping(long bookId, long userId) {
-        this.bookId = bookId;
-        this.userId = userId;
-    }
-
-    public BookViewMapping(long id, long bookId, long userId) {
-        this.id = id;
         this.bookId = bookId;
         this.userId = userId;
     }
