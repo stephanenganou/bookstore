@@ -6,8 +6,8 @@ services:
     image: 'mysql:8.0.27'
     command: --default-authentication-plugin=mysql_native_password
     restart: on-failure
-    ports:
-      - '3306:3307'
+    expose:
+      - 3306
     volumes:
       - ./mysql-datavolume:/var/lib/mysql
     environment:
@@ -19,6 +19,7 @@ services:
   #Service 2: Spring MVC App
   webtrackerapp:
     image: web_book_tracker_apps
+    restart: on-failure
     build:
       context: .
       dockerfile: Dockerfile
@@ -32,7 +33,7 @@ services:
       - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT-SQL=false
       - SPRING_JPA_HIBERNATE_DDL-AUTO=none
       - SPRING_JPA_DEFER-DATASOURCE_INITIALIZATION=true
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3307/web_book_tracker?useSSL=false
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/web_book_tracker?useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=training
       - SERVER_PORT=5000
