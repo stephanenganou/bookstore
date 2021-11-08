@@ -35,7 +35,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/web_book_tracker?useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=training
-      - SERVER_PORT=
+      - SERVER_PORT=5000
     ports:
       - '8080:8080'
     depends_on:
