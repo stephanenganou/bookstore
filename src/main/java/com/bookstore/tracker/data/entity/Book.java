@@ -2,6 +2,9 @@ package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.helper.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -11,6 +14,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "BOOK")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book extends Auditable<String> {
 
     @Id
@@ -29,17 +35,6 @@ public class Book extends Auditable<String> {
 
     @Column(name = "PRICE")
     private float price;
-
-    public Book() {
-    }
-
-    public Book(long id, String name, String description, String image, float price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.price = price;
-    }
 
     public Book(String name, String description, String image, float price) {
         this.name = name;
@@ -61,45 +56,5 @@ public class Book extends Auditable<String> {
                 ", image='" + image + '\'' +
                 ", price=" + price +
                 '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
     }
 }

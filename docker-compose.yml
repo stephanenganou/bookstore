@@ -9,7 +9,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ../mysql-datavolume:/var/lib/mysql
+      - ./mysql-datavolume:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=training
       - MYSQL_DATABASE=training
@@ -27,6 +27,11 @@ services:
       - ./terminal-adapter-dummy-files:/secrets
     environment:
       - MYSQL_ROOT_PASSWORD=training
+      - SPRING_JPA_DATABASE=mysql
+      - SPRING_JPA_SHOW-SQL=false
+      - SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT-SQL=false
+      - SPRING_JPA_HIBERNATE_DDL-AUTO=none
+      - SPRING_JPA_DEFER-DATASOURCE_INITIALIZATION=true
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/web_book_tracker?useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=training

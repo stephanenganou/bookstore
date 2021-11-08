@@ -1,6 +1,9 @@
 package com.bookstore.tracker.data.entity;
 
 import com.bookstore.tracker.helper.Auditable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,6 +13,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "AUTHORITY")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Authority extends Auditable<String> {
 
     @Id
@@ -24,15 +30,6 @@ public class Authority extends Auditable<String> {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User assignedUser;
 
-    public Authority() {
-    }
-
-    public Authority(long id, String authGroup, User assignedUser) {
-        this.id = id;
-        this.authGroup = authGroup;
-        this.assignedUser = assignedUser;
-    }
-
     public Authority(String authGroup, User assignedUser) {
         this.authGroup = authGroup;
         this.assignedUser = assignedUser;
@@ -45,29 +42,5 @@ public class Authority extends Auditable<String> {
                 ", authGroup='" + authGroup + '\'' +
                 ", assignedUser=" + assignedUser +
                 '}';
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public User getAssignedUser() {
-        return assignedUser;
-    }
-
-    public void setAssignedUser(User assignedUser) {
-        this.assignedUser = assignedUser;
-    }
-
-    public String getAuthGroup() {
-        return authGroup;
-    }
-
-    public void setAuthGroup(String authGroup) {
-        this.authGroup = authGroup;
     }
 }
