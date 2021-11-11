@@ -9,7 +9,7 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - ../mysql-datavolume:/var/lib/mysql
+      - ./mysql-datavolume:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=training
       - MYSQL_DATABASE=training

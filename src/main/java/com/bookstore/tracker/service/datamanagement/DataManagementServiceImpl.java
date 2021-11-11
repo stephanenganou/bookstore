@@ -53,7 +53,7 @@ public class DataManagementServiceImpl implements DataManagementService {
                         results[1], results[2], results[3],
                         Float.parseFloat(results[4]));
 
-                saveBookInNotExist(bookDto.convertToBook());
+                saveBookIfNotExist(bookDto.convertToBook());
             } else {
                 log.info("This record has not the normal field length: {}", results.length);
             }
@@ -61,7 +61,7 @@ public class DataManagementServiceImpl implements DataManagementService {
 
     }
 
-    private void saveBookInNotExist(Book bookRecord) {
+    private void saveBookIfNotExist(Book bookRecord) {
         if (bookDao.findByName(bookRecord.getName()).isPresent()) {
             log.info("The Book with the name: {} does exist already!", bookRecord.getName());
         } else {
