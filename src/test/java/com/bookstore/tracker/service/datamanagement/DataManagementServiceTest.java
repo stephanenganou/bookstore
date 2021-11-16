@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.doThrow;
  * @version 1.0
  */
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 class DataManagementServiceTest {
 

@@ -43,7 +43,8 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public BookDto getBookById(final long bookId) {
         Book foundBook = bookDao.getById(bookId);
-        return foundBook.convertToDto();
+
+        return (null == foundBook) ? null : foundBook.convertToDto();
     }
 
     @Override
