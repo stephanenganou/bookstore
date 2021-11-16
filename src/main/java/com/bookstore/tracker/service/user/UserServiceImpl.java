@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     public User getLoggedUser() {
         if (null != SecurityContextHolder.getContext().getAuthentication()
                 && !("anonymousUser".equals(SecurityContextHolder.getContext().getAuthentication().getPrincipal()))) {
-            BookstoreUserPrincipal principal = (BookstoreUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            final BookstoreUserPrincipal principal = (BookstoreUserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             return principal.getUser();
         } else {
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isEmailValid(final String email) {
-        Matcher matcher = PATTERN.matcher(email);
+        final Matcher matcher = PATTERN.matcher(email);
         return matcher.matches();
     }
 }

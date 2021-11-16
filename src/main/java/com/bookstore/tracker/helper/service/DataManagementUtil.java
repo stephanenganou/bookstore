@@ -28,10 +28,10 @@ public final class DataManagementUtil {
     }
 
     public static List<Record> getRecordsFromCsvFile(final MultipartFile multipartFile) throws IOException {
-        InputStream inputStream = multipartFile.getInputStream();
-        CsvParserSettings csvParserSettings = new CsvParserSettings();
+        final InputStream inputStream = multipartFile.getInputStream();
+        final CsvParserSettings csvParserSettings = new CsvParserSettings();
         csvParserSettings.setHeaderExtractionEnabled(true);
-        CsvParser csvParser = new CsvParser(csvParserSettings);
+        final CsvParser csvParser = new CsvParser(csvParserSettings);
 
         return csvParser.parseAllRecords(inputStream);
     }

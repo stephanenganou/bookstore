@@ -23,14 +23,14 @@ public class CSVControllerImpl implements CSVController {
     private final DataManagementService dataManagementService;
 
     @Autowired
-    public CSVControllerImpl(DataManagementService dataManagementService) {
+    public CSVControllerImpl(final DataManagementService dataManagementService) {
         this.dataManagementService = dataManagementService;
     }
 
     @PostMapping("/upload")
     @Override
-    public String uploadFile(@RequestParam("file") final MultipartFile file, Model bookModel) {
-        String pageToRedirectTo = "redirect:/book/list";
+    public String uploadFile(@RequestParam("file") final MultipartFile file, final Model bookModel) {
+        final String pageToRedirectTo = "redirect:/book/list";
         String message;
         try {
             dataManagementService.save(file);
@@ -73,7 +73,7 @@ public class CSVControllerImpl implements CSVController {
     }
      */
 
-    private void setMessageToMode(ResponseMessageDto message, Model model) {
+    private void setMessageToMode(final ResponseMessageDto message, final Model model) {
         model.addAttribute("message", message);
     }
 }

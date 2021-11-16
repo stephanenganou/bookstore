@@ -14,7 +14,8 @@ public class LoginControllerImpl implements LoginController {
 
     @GetMapping("/login")
     @Override
-    public String getLoginPage(@RequestParam(value = "error", required = false) boolean isError, Model loginModel) {
+    public String getLoginPage(@RequestParam(value = "error", required = false) final boolean isError,
+                               final Model loginModel) {
         if (isError) {
             loginModel.addAttribute("loginError", isError);
         }

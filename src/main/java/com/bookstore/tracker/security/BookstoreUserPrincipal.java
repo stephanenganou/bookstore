@@ -28,7 +28,7 @@ public class BookstoreUserPrincipal implements UserDetails {
         if (null == userRoles) {
             return Collections.emptySet();
         }
-        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
+        final Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
         userRoles.forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthGroup())));
 
         return grantedAuthorities;

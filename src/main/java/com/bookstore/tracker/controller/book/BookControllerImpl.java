@@ -34,13 +34,13 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/{bookId}")
     @Override
-    public String getBookById(@PathVariable("bookId") final long bookId, Model bookModel) {
+    public String getBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
         log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
-        BookDto foundBook = bookService.getBookById(bookId);
+        final BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
             bookModel.addAttribute("book", foundBook);
             bookService.mapBookViewByUser(bookId);
-            List<RecommendedItem> recommendedItems = similarityService.bookSimilarity(bookId, 5);
+            final List<RecommendedItem> recommendedItems = similarityService.bookSimilarity(bookId, 5);
             log.info("Recommendations for bookId: {} are: {}", bookId, recommendedItems);
 
             bookService.addRecommendationsForBook(recommendedItems, bookModel);
@@ -51,9 +51,9 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/list")
     @Override
-    public String getBookList(Model bookModel) {
+    public String getBookList(final Model bookModel) {
         log.info("GetBookList with Model: {}", bookModel);
-        List<BookDto> bookList = bookService.getAllAvailableBooks();
+        final List<BookDto> bookList = bookService.getAllAvailableBooks();
         if (null != bookList && bookList.size() > 0) {
             bookModel.addAttribute("bookList", bookList);
         }
@@ -63,7 +63,7 @@ public class BookControllerImpl implements BookController {
 
     @GetMapping("/delete/{bookId}")
     @Override
-    public String deleteBookById(@PathVariable("bookId") final long bookId, Model bookModel) {
+    public String deleteBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
         log.info("DeleteBookById with Id: {} and Model: {}", bookId, bookModel);
         bookService.deleteBookById(bookId);
 
@@ -72,9 +72,9 @@ public class BookControllerImpl implements BookController {
 
     @PostMapping("/save")
     @Override
-    public String saveBook(@ModelAttribute("book") BookDto book, Model bookModel) {
+    public String saveBook(@ModelAttribute("book") final BookDto book, final Model bookModel) {
         log.info("SaveBook with book: {} and Model: {}", book, bookModel);
-        Book savedBook = bookService.saveBook(book);
+        final Book savedBook = bookService.saveBook(book);
         if (null != savedBook) {
             bookModel.addAttribute("success", true);
         }

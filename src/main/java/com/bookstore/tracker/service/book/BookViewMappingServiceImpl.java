@@ -23,7 +23,7 @@ public class BookViewMappingServiceImpl implements BookViewMappingService {
     public void writeFileLocally(final String fileName,
                                  final List<BookViewMapping> dataList) throws IOException {
 
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+        final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
 
         for (BookViewMapping bookViewMapping : dataList) {
             bufferedWriter.write(bookViewMapping.getUserId()

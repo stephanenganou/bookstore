@@ -50,18 +50,18 @@ public class SimilarityServiceImpl implements SimilarityService {
             return getBookRecommendations(bookId, numberOfSimilarity);
 
         } catch (IOException | TasteException e) {
-            log.error("An Error occurred while writing the file locally: {}", e);
+            log.error("An Error occurred while writing the file locally: {}", e.getMessage());
         }
         return null;
     }
 
     private List<RecommendedItem> getBookRecommendations(final long bookId, final int numberOfSimilarity) throws IOException, TasteException {
 
-        DataModel dataModel = new FileDataModel(new File(fileNamePath));
+        final DataModel dataModel = new FileDataModel(new File(fileNamePath));
 
-        ItemSimilarity itemSimilarity = new LogLikelihoodSimilarity(dataModel);
+        final ItemSimilarity itemSimilarity = new LogLikelihoodSimilarity(dataModel);
 
-        GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dataModel, itemSimilarity);
+        final GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dataModel, itemSimilarity);
 
         return recommender.mostSimilarItems(bookId, numberOfSimilarity);
     }

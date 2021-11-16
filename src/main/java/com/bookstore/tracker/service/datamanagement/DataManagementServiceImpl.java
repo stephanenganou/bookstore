@@ -34,7 +34,7 @@ public class DataManagementServiceImpl implements DataManagementService {
     public void save(final MultipartFile multipartFile) {
         if (DataManagementUtil.isMultipartFileValid(multipartFile)) {
             try {
-                List<Record> csvRecordList = DataManagementUtil.getRecordsFromCsvFile(multipartFile);
+                final List<Record> csvRecordList = DataManagementUtil.getRecordsFromCsvFile(multipartFile);
                 processSave(csvRecordList);
             } catch (IOException e) {
                 log.info("An exception occurred while saving the csv Records");
@@ -47,9 +47,9 @@ public class DataManagementServiceImpl implements DataManagementService {
 
     private void processSave(final List<Record> recordList) {
         recordList.forEach(record -> {
-            String[] results = record.toString().split(";");
+            final String[] results = record.toString().split(";");
             if (CSV_STRING_FIX_LENGTH == results.length) {
-                BookDto bookDto = new BookDto(Long.parseLong(results[0]),
+                final BookDto bookDto = new BookDto(Long.parseLong(results[0]),
                         results[1], results[2], results[3],
                         Float.parseFloat(results[4]));
 

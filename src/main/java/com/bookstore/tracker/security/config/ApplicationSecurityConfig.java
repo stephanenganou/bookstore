@@ -43,7 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public DaoAuthenticationProvider getAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider() {
+        final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider() {
             @Override
             public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -64,12 +64,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(final AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(getAuthenticationProvider());
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
 
         http
                 .authorizeRequests()
@@ -93,7 +93,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private GrantedAuthoritiesMapper getAuthorityMapper() {
-        SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
+        final SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
         authorityMapper.setConvertToUpperCase(true);
         authorityMapper.setDefaultAuthority("USER");
 

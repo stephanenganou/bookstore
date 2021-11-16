@@ -24,7 +24,7 @@ public class BookstoreUserDetailsServiceImpl implements BookstoreUserDetailsServ
 
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        User user = userDao.findByUserName(username);
+        final User user = userDao.findByUserName(username);
         if (null == user) {
             throw new UsernameNotFoundException("cannot find username: " + username);
         }

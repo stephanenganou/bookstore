@@ -17,7 +17,7 @@ public class SpringAuditorAware implements AuditorAware<User> {
 
     @Override
     public Optional<User> getCurrentAuditor() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (null == authentication || !authentication.isAuthenticated()) {
             return Optional.empty();
         }

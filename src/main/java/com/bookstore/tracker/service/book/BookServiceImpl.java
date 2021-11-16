@@ -42,7 +42,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public BookDto getBookById(final long bookId) {
-        Book foundBook = bookDao.getById(bookId);
+        final Book foundBook = bookDao.getById(bookId);
 
         return (null == foundBook) ? null : foundBook.convertToDto();
     }
@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book saveBook(final BookDto bookToSave) {
-        Book book = bookDao.getById(bookToSave.getId());
+        final Book book = bookDao.getById(bookToSave.getId());
         if (null != book) {
             book.setName(bookToSave.getName());
             book.setDescription(bookToSave.getDescription());
@@ -79,7 +79,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void mapBookViewByUser(final long bookId) {
-        User loggedUser = userService.getLoggedUser();
+        final User loggedUser = userService.getLoggedUser();
 
         if (null != loggedUser) {
             log.info("User is authenticated");
@@ -89,7 +89,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addRecommendationsForBook(final List<RecommendedItem> recommendedItems, Model bookModel) {
-        List<BookDto> recommendedBookList = new ArrayList<>();
+        final List<BookDto> recommendedBookList = new ArrayList<>();
 
         for (RecommendedItem recommendedItem : recommendedItems) {
             Book recommendedBook = bookDao.getById(recommendedItem.getItemID());

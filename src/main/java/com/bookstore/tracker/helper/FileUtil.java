@@ -16,8 +16,8 @@ public final class FileUtil {
      * Uses getResource to generate url of the desired file. If url successfully instantiated the mehtod creates a File
      * Object and returns the absolute path to that file. If not the method returns null.
      */
-    public static File getAbsoluteStorePathFile(String pathToFile) {
-        URL storeUrl = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
+    public static File getAbsoluteStorePathFile(final String pathToFile) {
+        final URL storeUrl = Thread.currentThread().getContextClassLoader().getResource(pathToFile);
         File file;
         if (null == storeUrl || storeUrl.getFile().isEmpty()) {
             file = new File(pathToFile);
