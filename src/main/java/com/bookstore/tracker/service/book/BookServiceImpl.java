@@ -88,16 +88,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addRecommendationsForBook(final List<RecommendedItem> RecommendedItems, Model bookModel) {
-        List<BookDto> foundBookList = new ArrayList<>();
+    public void addRecommendationsForBook(final List<RecommendedItem> recommendedItems, Model bookModel) {
+        List<BookDto> recommendedBookList = new ArrayList<>();
 
-        for (RecommendedItem recommendedItem : RecommendedItems) {
-            Book foundBook = bookDao.getById(recommendedItem.getItemID());
-            if (null != foundBook) {
-                foundBookList.add(foundBook.convertToDto());
+        for (RecommendedItem recommendedItem : recommendedItems) {
+            Book recommendedBook = bookDao.getById(recommendedItem.getItemID());
+            if (null != recommendedBook) {
+                recommendedBookList.add(recommendedBook.convertToDto());
             }
         }
 
-        bookModel.addAttribute("recommendedBooks", foundBookList);
+        bookModel.addAttribute("recommendedBooks", recommendedBookList);
     }
 }

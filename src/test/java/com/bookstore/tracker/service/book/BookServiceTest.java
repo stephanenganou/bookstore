@@ -4,12 +4,17 @@ import com.bookstore.tracker.data.dao.BookDao;
 import com.bookstore.tracker.data.dao.BookViewMappingDao;
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.data.entity.Book;
+import com.bookstore.tracker.data.entity.BookViewMapping;
+import com.bookstore.tracker.data.entity.User;
+import com.bookstore.tracker.entitydatautil.EntityFactory;
 import com.bookstore.tracker.service.user.UserService;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +39,22 @@ class BookServiceTest {
     private Book bookMock;
 
     @Mock
+    private BookViewMapping bookViewMappingMock;
+
+    @Mock
     private BookDto bookDtoMock;
 
     @Mock
     private UserService userServiceMock;
 
     @Mock
+    private User loggedUserMock;
+
+    @Mock
     private BookViewMappingDao bookViewMappingDaoMock;
+
+    @Mock
+    private Model bookModel;
 
 
     private BookService bookService;
@@ -103,5 +117,46 @@ class BookServiceTest {
         // Verify
         assertThat(availableBooks.size(), is(1));
         assertThat(availableBooks.get(0), is(bookDtoMock));
+    }
+
+    @Test
+    void whenMapBookViewByUser_withLoggedUser_thenSaveBookViewMapping() {
+        // Prepare
+        when(userServiceMock.getLoggedUser()).thenReturn(loggedUserMock);
+        when(bookViewMappingDaoMock.save(any(BookViewMapping.class))).thenReturn(bookViewMappingMock);
+
+        // Test
+        bookService.mapBookViewByUser(VALID_BOOK_ID);
+
+        // Verify
+        verify(bookViewMappingDaoMock, times(1)).save(any(BookViewMapping.class));
+    }
+
+    @Test
+    void whenMapBookViewByUser_withUnLoggedUser_thenDoNothing() {
+        // Prepare
+        when(userServiceMock.getLoggedUser()).thenReturn(null);
+
+        // Test
+        bookService.mapBookViewByUser(INVALID_BOOK_ID);
+
+        // Verify
+        verify(bookViewMappingDaoMock, times(0)).save(any(BookViewMapping.class));
+    }
+
+    @Test
+    void whenAddRecommendationsForBook_withValidBookId_thenCallAddAttribute() {
+        // Prepare
+        List<RecommendedItem> recommendedItems = new ArrayList<>();
+        recommendedItems.add(EntityFactory.getRecommendedItem());
+        when(bookDaoMock.getById(any(Long.class))).thenReturn(bookMock);
+        when(bookModel.addAttribute(any(String.class), any(Object.class))).thenReturn(bookModel);
+
+        // Test
+        bookService.addRecommendationsForBook(recommendedItems, bookModel);
+
+        // Verify
+        verify(bookModel, times(1)).addAttribute(any(String.class), any(Object.class));
+        verify(bookDaoMock, times(1)).getById(any(Long.class));
     }
 }

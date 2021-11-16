@@ -1,6 +1,7 @@
 package com.bookstore.tracker.entitydatautil;
 
 import com.bookstore.tracker.data.entity.BookViewMapping;
+import org.apache.mahout.cf.taste.recommender.RecommendedItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * @author Stephane Nganou
  * @version 1.0
  */
-public final class EntityFactory {
+public class EntityFactory {
 
     public static List<BookViewMapping> getBookViewMappingList() {
         List<BookViewMapping> mappingList = new ArrayList<>();
@@ -30,5 +31,21 @@ public final class EntityFactory {
     public static BookViewMapping getBookViewMapping() {
 
         return new BookViewMapping(43442333, 20443683);
+    }
+
+    public static RecommendedItem getRecommendedItem() {
+        return new MyRecommendedItem();
+    }
+
+    static class MyRecommendedItem implements RecommendedItem {
+        @Override
+        public long getItemID() {
+            return 1111111;
+        }
+
+        @Override
+        public float getValue() {
+            return 0;
+        }
     }
 }
