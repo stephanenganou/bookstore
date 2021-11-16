@@ -25,6 +25,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Stephane Nganou
+ * @version 1.0
+ */
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
 
