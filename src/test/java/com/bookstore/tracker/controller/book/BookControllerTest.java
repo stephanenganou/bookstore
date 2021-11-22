@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @version 1.0
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional
 @ActiveProfiles("test")
 class BookControllerTest {
 
@@ -84,6 +86,6 @@ class BookControllerTest {
         mockMvc.perform(get("/book/delete/{bookId}", VALID_BOOK_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(model().attribute("bookList", hasSize(expectedBookDtoList.size())));
+                .andExpect(model().attribute("bookList", hasSize(expectedBookDtoList.size() - 1)));
     }
 }
