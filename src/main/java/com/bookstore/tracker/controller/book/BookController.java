@@ -3,7 +3,6 @@ package com.bookstore.tracker.controller.book;
 import com.bookstore.tracker.data.dto.BookDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Stephane Nganou

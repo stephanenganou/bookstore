@@ -36,6 +36,7 @@ public class BookControllerImpl implements BookController {
     @Override
     public String getBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
         log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
+        String responsePage = "redirect:/notfound";
         final BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
             bookModel.addAttribute("book", foundBook);
@@ -44,9 +45,10 @@ public class BookControllerImpl implements BookController {
             log.info("Recommendations for bookId: {} are: {}", bookId, recommendedItems);
 
             bookService.addRecommendationsForBook(recommendedItems, bookModel);
+            responsePage = "book-update";
         }
 
-        return "book-update";
+        return responsePage;
     }
 
     @GetMapping("/list")

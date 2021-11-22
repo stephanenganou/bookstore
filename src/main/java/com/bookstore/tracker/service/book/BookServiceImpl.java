@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,9 +43,13 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public BookDto getBookById(final long bookId) {
-        final Book foundBook = bookDao.getById(bookId);
-
-        return (null == foundBook) ? null : foundBook.convertToDto();
+        try {
+            final Book foundBook = bookDao.getById(bookId);
+            return foundBook.convertToDto();
+        } catch (EntityNotFoundException e) {
+            log.error("The Book with the ID: {} , has not been found.", bookId);
+            return null;
+        }
     }
 
     @Override
@@ -89,15 +94,21 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addRecommendationsForBook(final List<RecommendedItem> recommendedItems, Model bookModel) {
-        final List<BookDto> recommendedBookList = new ArrayList<>();
+        long lastRecommendedBookId = 0;
+        try {
+            final List<BookDto> recommendedBookList = new ArrayList<>();
 
-        for (RecommendedItem recommendedItem : recommendedItems) {
-            Book recommendedBook = bookDao.getById(recommendedItem.getItemID());
-            if (null != recommendedBook) {
-                recommendedBookList.add(recommendedBook.convertToDto());
+            for (RecommendedItem recommendedItem : recommendedItems) {
+                lastRecommendedBookId = recommendedItem.getItemID();
+                Book recommendedBook = bookDao.getById(lastRecommendedBookId);
+                if (null != recommendedBook) {
+                    recommendedBookList.add(recommendedBook.convertToDto());
+                }
             }
-        }
 
-        bookModel.addAttribute("recommendedBooks", recommendedBookList);
+            bookModel.addAttribute("recommendedBooks", recommendedBookList);
+        } catch (EntityNotFoundException e) {
+            log.info("The Book with the Id: {} does not exist", lastRecommendedBookId);
+        }
     }
 }

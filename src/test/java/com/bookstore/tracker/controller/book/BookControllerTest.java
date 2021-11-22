@@ -27,8 +27,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BookControllerTest {
 
     private static final long VALID_BOOK_ID = 11443683;
-    private MockMvc mockMvc;
+    private static final long INVALID_BOOK_ID = 11111;
 
+    private MockMvc mockMvc;
     @Autowired
     private BookService bookService;
     @Autowired
@@ -44,10 +45,19 @@ class BookControllerTest {
 
     @Test
     void whenGetBookById_withExistingBookId_thenAddAttributeToMode() throws Exception {
+
         BookDto expectedBookDto = bookService.getBookById(VALID_BOOK_ID);
         mockMvc.perform(get("/book/{bookId}", VALID_BOOK_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("book", is(expectedBookDto)));
+    }
+
+    @Test
+    void whenGetBookById_nonExistingBookId_thenRedirectToNotFoundPage() throws Exception {
+
+        mockMvc.perform(get("/book/{bookId}", INVALID_BOOK_ID))
+                .andDo(print())
+                .andExpect(status().is(302));
     }
 }
