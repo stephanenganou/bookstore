@@ -11,6 +11,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,11 +30,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BookControllerTest {
 
     private static final long VALID_BOOK_ID = 11443683;
+
     private static final long INVALID_BOOK_ID = 11111;
 
     private MockMvc mockMvc;
+
     @Autowired
     private BookService bookService;
+
     @Autowired
     private WebApplicationContext context;
 
@@ -59,5 +65,25 @@ class BookControllerTest {
         mockMvc.perform(get("/book/{bookId}", INVALID_BOOK_ID))
                 .andDo(print())
                 .andExpect(status().is(302));
+    }
+
+    @Test
+    void whenGetBookList_thenReturnBookListPage() throws Exception {
+
+        List<BookDto> expectedBookDtoList = bookService.getAllAvailableBooks();
+        mockMvc.perform(get("/book/list"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("bookList", is(expectedBookDtoList)));
+    }
+
+    @Test
+    void whenDeleteBookById_withExistingBookId_thenDeleteBook() throws Exception {
+
+        List<BookDto> expectedBookDtoList = bookService.getAllAvailableBooks();
+        mockMvc.perform(get("/book/delete/{bookId}", VALID_BOOK_ID))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("bookList", hasSize(expectedBookDtoList.size())));
     }
 }

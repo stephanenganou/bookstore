@@ -35,7 +35,8 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/{bookId}")
     @Override
     public String getBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
-        log.info("GetBookById with Id: {} and Model: {}", bookId, bookModel);
+
+        log.info("Get BookById with Id: {} and Model: {}", bookId, bookModel);
         String responsePage = "redirect:/notfound";
         final BookDto foundBook = bookService.getBookById(bookId);
         if (null != foundBook) {
@@ -54,7 +55,8 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/list")
     @Override
     public String getBookList(final Model bookModel) {
-        log.info("GetBookList with Model: {}", bookModel);
+
+        log.info("Get BookList with Model: {}", bookModel);
         final List<BookDto> bookList = bookService.getAllAvailableBooks();
         if (null != bookList && bookList.size() > 0) {
             bookModel.addAttribute("bookList", bookList);
@@ -66,7 +68,8 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/delete/{bookId}")
     @Override
     public String deleteBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
-        log.info("DeleteBookById with Id: {} and Model: {}", bookId, bookModel);
+
+        log.info("Delete BookById with Id: {} and Model: {}", bookId, bookModel);
         bookService.deleteBookById(bookId);
 
         return getBookList(bookModel);
@@ -75,6 +78,7 @@ public class BookControllerImpl implements BookController {
     @PostMapping("/save")
     @Override
     public String saveBook(@ModelAttribute("book") final BookDto book, final Model bookModel) {
+
         log.info("SaveBook with book: {} and Model: {}", book, bookModel);
         final Book savedBook = bookService.saveBook(book);
         if (null != savedBook) {

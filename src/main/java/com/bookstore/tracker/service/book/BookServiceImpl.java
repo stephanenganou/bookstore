@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  */
 @Service
+@Transactional
 @Slf4j
 public class BookServiceImpl implements BookService {
 
@@ -41,7 +42,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public BookDto getBookById(final long bookId) {
         try {
             final Book foundBook = bookDao.getById(bookId);
@@ -53,7 +53,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public List<BookDto> getAllAvailableBooks() {
         return bookDao.findAll().stream()
                 .map(Book::convertToDto)
@@ -61,13 +60,15 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public void deleteBookById(final long bookId) {
-        bookDao.deleteById(bookId);
+        try {
+            bookDao.deleteById(bookId);
+        } catch (EntityNotFoundException e) {
+            log.info("The Book with Id {} cannot be deleted because it does not exist", bookId);
+        }
     }
 
     @Override
-    @Transactional
     public Book saveBook(final BookDto bookToSave) {
         final Book book = bookDao.getById(bookToSave.getId());
         if (null != book) {
@@ -78,7 +79,7 @@ public class BookServiceImpl implements BookService {
 
             return bookDao.save(book);
         } else {
-            return null;
+            return book;
         }
     }
 
@@ -87,7 +88,7 @@ public class BookServiceImpl implements BookService {
         final User loggedUser = userService.getLoggedUser();
 
         if (null != loggedUser) {
-            log.info("User is authenticated");
+            log.info("User: {} is authenticated", loggedUser.getUserName());
             bookViewMappingDao.save(new BookViewMapping(bookId, loggedUser.getId()));
         }
     }
