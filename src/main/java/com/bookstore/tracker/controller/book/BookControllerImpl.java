@@ -77,14 +77,15 @@ public class BookControllerImpl implements BookController {
 
     @PostMapping("/save")
     @Override
-    public String saveBook(@ModelAttribute("book") final BookDto book, final Model bookModel) {
+    public String saveBook(@ModelAttribute("book") final BookDto bookDto, final Model bookModel) {
 
-        log.info("SaveBook with book: {} and Model: {}", book, bookModel);
-        final Book savedBook = bookService.saveBook(book);
-        if (null != savedBook) {
+        log.info("SaveBook with book: {} and Model: {}", bookDto, bookModel);
+        final Book bookToSave = bookService.saveBook(bookDto);
+        if (null != bookToSave) {
             bookModel.addAttribute("success", true);
         }
 
-        return "redirect:/book/list";
+        //return "redirect:/book/list";
+        return getBookList(bookModel);
     }
 }

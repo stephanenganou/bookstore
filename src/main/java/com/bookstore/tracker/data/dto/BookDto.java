@@ -35,6 +35,16 @@ public class BookDto {
     @NotNull(message = "this can not be null")
     private float price;
 
+    public BookDto(@NotBlank(message = "This can not be blank") @NotNull(message = "this can not be null") String name,
+                   @NotBlank(message = "This can not be blank") @NotNull(message = "this can not be null") @Min(10) String description,
+                   String image, @NotBlank(message = "This can not be blank") @NotNull(message = "this can not be null") float price) {
+
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+    }
+
     public Book convertToBook() {
         return new Book(id, name, description, image, price);
     }

@@ -26,9 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Stephane Nganou
  * @version 1.0
  */
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
-@ActiveProfiles("test")
 class BookControllerTest {
 
     private static final long VALID_BOOK_ID = 11443683;

@@ -70,16 +70,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book saveBook(final BookDto bookToSave) {
-        final Book book = bookDao.getById(bookToSave.getId());
-        if (null != book) {
-            book.setName(bookToSave.getName());
-            book.setDescription(bookToSave.getDescription());
-            book.setImage(bookToSave.getImage());
-            book.setPrice(bookToSave.getPrice());
-
-            return bookDao.save(book);
+        if (isNewBook(bookToSave)) {
+            return bookDao.save(bookToSave.convertToBook());
         } else {
-            return book;
+            return saveBookWhenNew(bookToSave);
         }
     }
 
@@ -110,6 +104,30 @@ public class BookServiceImpl implements BookService {
             bookModel.addAttribute("recommendedBooks", recommendedBookList);
         } catch (EntityNotFoundException e) {
             log.info("The Book with the Id: {} does not exist", lastRecommendedBookId);
+        }
+    }
+
+    private boolean isNewBook(final BookDto bookDto) {
+        return bookDto.getId() == 0;
+    }
+
+    private Book saveBookWhenNew(final BookDto bookToSave) {
+
+        try {
+            final Book book = bookDao.getById(bookToSave.getId());
+            if (null != book) {
+                book.setName(bookToSave.getName());
+                book.setDescription(bookToSave.getDescription());
+                book.setImage(bookToSave.getImage());
+                book.setPrice(bookToSave.getPrice());
+
+                return bookDao.save(book);
+            } else {
+                return null;
+            }
+        } catch (EntityNotFoundException e) {
+            log.error("The book with Id: {} does not exist", bookToSave.getId());
+            return null;
         }
     }
 }
