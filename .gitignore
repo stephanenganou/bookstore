@@ -5,6 +5,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+#Ignore mysql data change
+mysql-datavolume/
+
 ### STS ###
 .apt_generated
 .classpath
