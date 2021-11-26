@@ -35,7 +35,7 @@ public class BookViewMappingServiceImpl implements BookViewMappingService {
         bufferedWriter.close();
     }
 
-    //TODO: add timeStamp in the csv file.
+    // TODO: add timeStamp in the csv file.
     private String getDateInStringFormat(final Date date) {
         return (null == date) ? "" : DateFormat.getDateInstance().format(date);
     }

@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.ui.Model;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +86,7 @@ class BookServiceTest {
     @Test
     void whenGetBookById_withInValidBookId_thenReturnNull() {
         // prepare
-        when(bookDaoMock.getById(any(Long.class))).thenReturn(null);
+        when(bookDaoMock.getById(any(Long.class))).thenThrow(EntityNotFoundException.class);
 
         // Test
         BookDto foundBook = bookService.getBookById(INVALID_BOOK_ID);

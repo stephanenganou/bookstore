@@ -2,21 +2,18 @@ package com.bookstore.tracker.controller.book;
 
 import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.service.book.BookService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -28,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 @Transactional
 class BookControllerTest {
 
@@ -35,21 +33,11 @@ class BookControllerTest {
 
     private static final long INVALID_BOOK_ID = 11111;
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private BookService bookService;
-
-    @Autowired
-    private WebApplicationContext context;
-
-    @BeforeEach
-    void setUp() {
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-    }
 
     @Test
     void whenGetBookById_withExistingBookId_thenAddAttributeToMode() throws Exception {

@@ -70,18 +70,26 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book saveBook(final BookDto bookToSave) {
-        if (isNewBook(bookToSave)) {
-            return bookDao.save(bookToSave.convertToBook());
-        } else {
-            return saveBookWhenNew(bookToSave);
+        Book returnBookAfterSave = null;
+        try {
+            if (isNewBook(bookToSave)) {
+                returnBookAfterSave = bookDao.save(bookToSave.convertToBook());
+            } else {
+                returnBookAfterSave = saveBookWhenNew(bookToSave);
+            }
+        } catch (EntityNotFoundException e) {
+            log.info("The following Book failed to be saved: {}", bookToSave);
+            return returnBookAfterSave;
         }
+
+        return returnBookAfterSave;
     }
 
     @Override
     public void mapBookViewByUser(final long bookId) {
         final User loggedUser = userService.getLoggedUser();
 
-        if (null != loggedUser) {
+        if (loggedUser != null) {
             log.info("User: {} is authenticated", loggedUser.getUserName());
             bookViewMappingDao.save(new BookViewMapping(bookId, loggedUser.getId()));
         }
@@ -95,8 +103,8 @@ public class BookServiceImpl implements BookService {
 
             for (RecommendedItem recommendedItem : recommendedItems) {
                 lastRecommendedBookId = recommendedItem.getItemID();
-                Book recommendedBook = bookDao.getById(lastRecommendedBookId);
-                if (null != recommendedBook) {
+                final Book recommendedBook = bookDao.getById(lastRecommendedBookId);
+                if (recommendedBook != null) {
                     recommendedBookList.add(recommendedBook.convertToDto());
                 }
             }
@@ -115,7 +123,7 @@ public class BookServiceImpl implements BookService {
 
         try {
             final Book book = bookDao.getById(bookToSave.getId());
-            if (null != book) {
+            if (book != null) {
                 book.setName(bookToSave.getName());
                 book.setDescription(bookToSave.getDescription());
                 book.setImage(bookToSave.getImage());

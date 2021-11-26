@@ -26,9 +26,9 @@ import static org.mockito.Mockito.doThrow;
  * @author Stephane Nganou
  * @version 1.0
  */
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
 class DataManagementServiceTest {
 
     @Autowired

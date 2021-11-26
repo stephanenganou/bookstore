@@ -3,6 +3,7 @@ package com.bookstore.tracker.controller.login;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -14,8 +15,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * @author Stephane Nganou
@@ -23,26 +23,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
 public class LoginControllerTest {
 
+    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext context;
-
-    @BeforeEach
-    void setUp() {
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(springSecurity())
-                .build();
-    }
 
     @Test
     void whenGetLoginPage_withNonError_thenReturnLoginPage() throws Exception {
 
         mockMvc.perform(get("/login"))
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Bookstore Login Page")));
     }
 
@@ -52,6 +47,7 @@ public class LoginControllerTest {
         mockMvc.perform(get("/login")
                 .param("error", "true"))
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(model().attribute("loginError", is(true)));
     }
 
@@ -60,6 +56,7 @@ public class LoginControllerTest {
 
         mockMvc.perform(get("/"))
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Homepage")));
     }
 
@@ -68,6 +65,7 @@ public class LoginControllerTest {
 
         mockMvc.perform(get("/home"))
                 .andDo(print())
+                .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Homepage")));
     }
 }

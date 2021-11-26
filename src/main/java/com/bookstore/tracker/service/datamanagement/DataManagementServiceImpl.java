@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -62,11 +63,15 @@ public class DataManagementServiceImpl implements DataManagementService {
     }
 
     private void saveBookIfNotExist(Book bookRecord) {
-        if (bookDao.findByName(bookRecord.getName()).isPresent()) {
-            log.info("The Book with the name: {} does exist already!", bookRecord.getName());
-        } else {
-            bookDao.save(bookRecord);
-            log.info("Record saved!");
+        try {
+            if (bookDao.findByName(bookRecord.getName()).isPresent()) {
+                log.info("The Book with the name: {} does exist already!", bookRecord.getName());
+            } else {
+                bookDao.save(bookRecord);
+                log.info("Record saved!");
+            }
+        } catch (EntityNotFoundException e) {
+            log.info("The System couldn't find the the Book: {}", bookRecord);
         }
     }
 
