@@ -38,7 +38,7 @@ public class DataManagementServiceImpl implements DataManagementService {
                 final List<Record> csvRecordList = DataManagementUtil.getRecordsFromCsvFile(multipartFile);
                 processSave(csvRecordList);
             } catch (IOException e) {
-                log.info("An exception occurred while saving the csv Records");
+                log.error("An exception occurred while saving the csv Records");
                 throw new CSVException("CSV Parsing exception");
             }
         } else {
@@ -71,7 +71,7 @@ public class DataManagementServiceImpl implements DataManagementService {
                 log.info("Record saved!");
             }
         } catch (EntityNotFoundException e) {
-            log.info("The System couldn't find the the Book: {}", bookRecord);
+            log.error("The System couldn't find the the Book: {}", bookRecord);
         }
     }
 

@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
         try {
             bookDao.deleteById(bookId);
         } catch (EntityNotFoundException e) {
-            log.info("The Book with Id {} cannot be deleted because it does not exist", bookId);
+            log.error("The Book with Id {} cannot be deleted because it does not exist", bookId);
         }
     }
 
@@ -78,7 +78,7 @@ public class BookServiceImpl implements BookService {
                 returnBookAfterSave = saveBookWhenNew(bookToSave);
             }
         } catch (EntityNotFoundException e) {
-            log.info("The following Book failed to be saved: {}", bookToSave);
+            log.error("The following Book failed to be saved: {}", bookToSave);
             return returnBookAfterSave;
         }
 
@@ -111,7 +111,7 @@ public class BookServiceImpl implements BookService {
 
             bookModel.addAttribute("recommendedBooks", recommendedBookList);
         } catch (EntityNotFoundException e) {
-            log.info("The Book with the Id: {} does not exist", lastRecommendedBookId);
+            log.error("The Book with the Id: {} does not exist", lastRecommendedBookId);
         }
     }
 

@@ -42,7 +42,7 @@ public class CSVControllerImpl implements CSVController {
             //return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessageDto(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            log.info("hasCSVFormat: {} and message: {}", true, message);
+            log.error("hasCSVFormat: {} and message: {}", true, message);
             setMessageToMode(new ResponseMessageDto(message, "danger"),
                     bookModel);
             e.printStackTrace();
