@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,5 +77,19 @@ class BookControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("bookList", hasSize(expectedBookDtoList.size() - 1)));
+    }
+
+    @Test
+    void whenSaveBook_thenAddBookInDBAndReturnToBookListPage() throws Exception {
+
+        BookDto bookToSave = new BookDto("TestBook", "Test Book Description", "", 13);
+        int expectedBookDtoListLength = bookService.getAllAvailableBooks().size() + 1;
+        mockMvc.perform(post("/book/save", VALID_BOOK_ID)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .sessionAttr("book", bookToSave)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("bookList", hasSize(expectedBookDtoListLength)));
     }
 }

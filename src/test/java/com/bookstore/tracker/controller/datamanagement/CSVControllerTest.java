@@ -1,13 +1,11 @@
 package com.bookstore.tracker.controller.datamanagement;
 
-import com.bookstore.tracker.data.dto.BookDto;
 import com.bookstore.tracker.service.book.BookService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,11 +14,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -48,18 +45,21 @@ public class CSVControllerTest {
     void whenUploadFile_withValidContain_thenAddBooks() throws Exception {
         // Prepare
         File file = new File("data/uploadData.csv");
-        MockMultipartFile validUploadFile = new MockMultipartFile("uploadData", "uploadData.csv",
-                MediaType.ALL_VALUE,
+        MockMultipartFile validUploadFile = new MockMultipartFile("file", "file",
+                "text/.csv",
                 Files.readAllBytes(file.toPath()));
 
-        System.out.println(validUploadFile.isEmpty());
-
-        List<BookDto> oldBookDtoList = bookService.getAllAvailableBooks();
+        int oldBookDtoListSize = bookService.getAllAvailableBooks().size();
 
         //Test + Verify
-        mockMvc.perform(multipart("/data/upload").file(validUploadFile))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("bookList", hasSize(oldBookDtoList.size() + 2)));
+        mockMvc.perform(multipart("/data/upload")
+                .file(validUploadFile)
+        )
+                .andExpect(status().is(302));
+
+        int expectedBookDtoListSize = bookService.getAllAvailableBooks().size();
+        assertThat(expectedBookDtoListSize, is(oldBookDtoListSize + 2));
+
     }
 
 }
