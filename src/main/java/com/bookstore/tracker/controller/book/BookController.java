@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 @Controller
 public interface BookController {
 
+    String getAddBookPage(Model model);
+
     String getBookById(long bookId, Model bookModel);
 
     String getBookList(Model bookModel);

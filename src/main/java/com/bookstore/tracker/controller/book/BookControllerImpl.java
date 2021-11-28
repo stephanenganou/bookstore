@@ -32,6 +32,19 @@ public class BookControllerImpl implements BookController {
         this.similarityService = similarityService;
     }
 
+    @GetMapping("/")
+    @Override
+    public String getAddBookPage(final Model bookModel) {
+
+        log.info("Get Add Book /book/");
+
+        final BookDto foundBook = new BookDto();
+        bookModel.addAttribute("book", foundBook);
+
+
+        return "add-book";
+    }
+
     @GetMapping("/{bookId}")
     @Override
     public String getBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {

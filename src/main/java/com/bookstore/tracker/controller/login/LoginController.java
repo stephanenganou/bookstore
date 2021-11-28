@@ -12,7 +12,7 @@ public interface LoginController {
 
     String getLoginPage(boolean isError, Model loginModel);
 
-    String getIndexPage();
+    String getIndexPage(Model loginModel);
 
-    String getHomePage();
+    String getHomePage(Model loginModel);
 }

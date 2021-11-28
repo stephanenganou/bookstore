@@ -25,13 +25,13 @@ public class LoginControllerImpl implements LoginController {
 
     @GetMapping("/")
     @Override
-    public String getIndexPage() {
-        return getHomePage();
+    public String getIndexPage(final Model model) {
+        return getHomePage(model);
     }
 
     @GetMapping("/home")
     @Override
-    public String getHomePage() {
+    public String getHomePage(final Model model) {
         return "home";
     }
 }
