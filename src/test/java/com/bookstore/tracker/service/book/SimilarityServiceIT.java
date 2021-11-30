@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.nullValue;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-class SimilarityServiceTest {
+class SimilarityServiceIT {
 
     private static final long VALID_BOOK_ID = 20443683;
 
