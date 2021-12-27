@@ -16,6 +16,8 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class handles the routing of everything related to books topics.
  */
 @Controller
 @RequestMapping("/book")
@@ -32,6 +34,9 @@ public class BookControllerImpl implements BookController {
         this.similarityService = similarityService;
     }
 
+    /**
+     * @see {@link BookController#getAddBookPage(Model)}
+     */
     @GetMapping("/")
     @Override
     public String getAddBookPage(final Model bookModel) {
@@ -45,6 +50,9 @@ public class BookControllerImpl implements BookController {
         return "add-book";
     }
 
+    /**
+     * @see {@link BookController#getBookById(long, Model)}
+     */
     @GetMapping("/{bookId}")
     @Override
     public String getBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
@@ -65,6 +73,9 @@ public class BookControllerImpl implements BookController {
         return responsePage;
     }
 
+    /**
+     * @see {@link BookController#getBookList(Model)}
+     */
     @GetMapping("/list")
     @Override
     public String getBookList(final Model bookModel) {
@@ -78,6 +89,9 @@ public class BookControllerImpl implements BookController {
         return "book-list";
     }
 
+    /**
+     * @see {@link BookController#deleteBookById(long, Model)}
+     */
     @GetMapping("/delete/{bookId}")
     @Override
     public String deleteBookById(@PathVariable("bookId") final long bookId, final Model bookModel) {
@@ -88,6 +102,9 @@ public class BookControllerImpl implements BookController {
         return getBookList(bookModel);
     }
 
+    /**
+     * @see {@link BookController#saveBook(BookDto, Model)}
+     */
     @PostMapping("/save")
     @Override
     public String saveBook(@ModelAttribute("book") final BookDto bookDto, final Model bookModel) {

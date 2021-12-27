@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
  * @author Stephane Nganou
  * @version 1.0
  *
- * This class handles the routing of everything related to books topics.
+ * This interface enforces specifics methods for classes which will implement it.
  */
 @Controller
 public interface BookController {
