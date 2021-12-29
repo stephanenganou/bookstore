@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class is responsible for managing everything related to csv (upload of data in the system
+ * export data from the system into a csv file)
  */
 @Controller
 @RequestMapping("/data")
@@ -27,6 +30,9 @@ public class CSVControllerImpl implements CSVController {
         this.dataManagementService = dataManagementService;
     }
 
+    /**
+     * Method (route) used to upload a file into the system.
+     */
     @PostMapping("/upload")
     @Override
     public String uploadFile(@RequestParam("file") final MultipartFile file, final Model bookModel) {
