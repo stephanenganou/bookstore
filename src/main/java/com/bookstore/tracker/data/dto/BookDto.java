@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * Data Transfer Object for the class Book.
  */
 @Data
 @NoArgsConstructor
