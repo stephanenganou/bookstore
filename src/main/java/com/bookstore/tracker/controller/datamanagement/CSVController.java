@@ -9,13 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Stephane Nganou
  * @version 1.0
  * <p>
- * This interface enforces specifics methods for classes which will implement it.
+ * This interface enforces specifics methods (csv related) for classes which will implement it.
  */
 @Controller
 public interface CSVController {
 
     /**
-     * This method is used to upload csv files in the system.
+     * Method (route) used to upload a file into the system.
      */
     String uploadFile(@RequestParam("file") MultipartFile file, Model bookModel);
 

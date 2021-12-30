@@ -35,7 +35,7 @@ public class BookControllerImpl implements BookController {
     }
 
     /**
-     * @see {@link BookController#getAddBookPage(Model)}
+     * @see com.bookstore.tracker.controller.book.BookController#getAddBookPage(Model)
      */
     @GetMapping("/")
     @Override
@@ -51,7 +51,7 @@ public class BookControllerImpl implements BookController {
     }
 
     /**
-     * @see {@link BookController#getBookById(long, Model)}
+     * @see com.bookstore.tracker.controller.book.BookController#getBookById(long, Model)
      */
     @GetMapping("/{bookId}")
     @Override
@@ -74,7 +74,7 @@ public class BookControllerImpl implements BookController {
     }
 
     /**
-     * @see {@link BookController#getBookList(Model)}
+     * @see com.bookstore.tracker.controller.book.BookController#getBookList(Model)
      */
     @GetMapping("/list")
     @Override
@@ -90,7 +90,7 @@ public class BookControllerImpl implements BookController {
     }
 
     /**
-     * @see {@link BookController#deleteBookById(long, Model)}
+     * @see com.bookstore.tracker.controller.book.BookController#deleteBookById(long, Model)
      */
     @GetMapping("/delete/{bookId}")
     @Override
@@ -103,7 +103,7 @@ public class BookControllerImpl implements BookController {
     }
 
     /**
-     * @see {@link BookController#saveBook(BookDto, Model)}
+     * @see com.bookstore.tracker.controller.book.BookController#saveBook(BookDto, Model)
      */
     @PostMapping("/save")
     @Override

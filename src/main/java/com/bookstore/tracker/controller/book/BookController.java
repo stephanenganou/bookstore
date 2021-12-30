@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
  * @author Stephane Nganou
  * @version 1.0
  * <p>
- * This interface enforces specifics methods for classes which will implement it.
+ * This interface enforces specifics methods (book related) for classes which will implement it.
  */
 @Controller
 public interface BookController {

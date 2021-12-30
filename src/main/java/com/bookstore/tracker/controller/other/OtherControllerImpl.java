@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class helps to route to other pages.
  */
 @Controller
 @Slf4j
 public class OtherControllerImpl implements OtherController {
 
+    /**
+     * @see OtherController#redirectToNotFoundPage()
+     */
     @RequestMapping("/notfound")
     @Override
     public String redirectToNotFoundPage() {
