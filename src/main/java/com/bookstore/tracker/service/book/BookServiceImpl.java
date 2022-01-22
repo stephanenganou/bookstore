@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class helps to retrieve information to render to client.
  */
 @Service
 @Transactional
@@ -41,6 +43,9 @@ public class BookServiceImpl implements BookService {
         this.bookViewMappingDao = bookViewMappingDao;
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#getBookById(long)
+     */
     @Override
     public BookDto getBookById(final long bookId) {
         try {
@@ -52,6 +57,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#getAllAvailableBooks()
+     */
     @Override
     public List<BookDto> getAllAvailableBooks() {
         return bookDao.findAll().stream()
@@ -59,6 +67,9 @@ public class BookServiceImpl implements BookService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#deleteBookById(long)
+     */
     @Override
     public void deleteBookById(final long bookId) {
         try {
@@ -68,6 +79,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#saveBook(BookDto)
+     */
     @Override
     public Book saveBook(final BookDto bookToSave) {
         Book returnBookAfterSave = null;
@@ -85,6 +99,9 @@ public class BookServiceImpl implements BookService {
         return returnBookAfterSave;
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#mapBookViewByUser(long)
+     */
     @Override
     public void mapBookViewByUser(final long bookId) {
         final User loggedUser = userService.getLoggedUser();
@@ -95,6 +112,9 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookService#addRecommendationsForBook(List, Model)
+     */
     @Override
     public void addRecommendationsForBook(final List<RecommendedItem> recommendedItems, Model bookModel) {
         long lastRecommendedBookId = 0;

@@ -13,13 +13,15 @@ import java.util.regex.Pattern;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This Class implements method call related only to User.
  */
 @Service
 @Lazy
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    private static final String POINT_COM_STRING = ".com";
+    private static final String DOT_COM_STRING = ".com";
 
     private static final String EMAIL_PATTERN =
             "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
@@ -27,18 +29,24 @@ public class UserServiceImpl implements UserService {
 
     private static final Pattern PATTERN = Pattern.compile(EMAIL_PATTERN);
 
+    /**
+     * @see UserService#isNotBockedDomain(String)
+     */
     @Override
     public boolean isNotBockedDomain(final String userName) {
         boolean isBlocked = true;
 
         if (!userName.isEmpty() && isEmailValid(userName)) {
             log.info("The inserted userName is: {}", userName);
-            isBlocked = userName.toLowerCase().contains(POINT_COM_STRING);
+            isBlocked = userName.toLowerCase().contains(DOT_COM_STRING);
         }
 
         return isBlocked;
     }
 
+    /**
+     * @see UserService#getLoggedUser()
+     */
     @Override
     public User getLoggedUser() {
         if (null != SecurityContextHolder.getContext().getAuthentication()

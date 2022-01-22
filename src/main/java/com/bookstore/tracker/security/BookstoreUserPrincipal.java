@@ -11,6 +11,8 @@ import java.util.*;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * Class allowing to access a User specific information.
  */
 public class BookstoreUserPrincipal implements UserDetails {
 

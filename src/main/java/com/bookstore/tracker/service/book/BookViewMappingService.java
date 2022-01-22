@@ -9,9 +9,14 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This interface enforces specifics methods (BookViewMapping related) for classes which will implement it.
  */
 @Service
 public interface BookViewMappingService {
 
-    void writeFileLocally(String fileName, List<BookViewMapping> dataList) throws IOException;
+    /**
+     * Method to write a file locally.
+     */
+    void writeFileLocally(final String fileName, final List<BookViewMapping> dataList) throws IOException;
 }

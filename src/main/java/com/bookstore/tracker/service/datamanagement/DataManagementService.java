@@ -8,9 +8,14 @@ import java.io.IOException;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This interface enforces specifics methods (Book related) for classes which will implement it.
  */
 @Service
 public interface DataManagementService {
 
-    void save(MultipartFile file) throws IOException;
+    /**
+     * Method is used to save a csvFile containing book information into the system.
+     */
+    void save(final MultipartFile csvFile) throws IOException;
 }

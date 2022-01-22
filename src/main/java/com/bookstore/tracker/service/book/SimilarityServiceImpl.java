@@ -20,6 +20,8 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class is used to handle the mapping and tracking of book's views by users.
  */
 @Service
 @Slf4j
@@ -40,7 +42,9 @@ public class SimilarityServiceImpl implements SimilarityService {
         this.bookViewMappingService = bookViewMappingService;
     }
 
-
+    /**
+     * @see com.bookstore.tracker.service.book.SimilarityService#bookSimilarity(long, int)
+     */
     @Override
     public List<RecommendedItem> bookSimilarity(final long bookId, final int numberOfSimilarity) {
         try {
@@ -51,8 +55,8 @@ public class SimilarityServiceImpl implements SimilarityService {
 
         } catch (IOException | TasteException e) {
             log.error("An Error occurred while writing the file locally: {}", e.getMessage());
+            return null;
         }
-        return null;
     }
 
     private List<RecommendedItem> getBookRecommendations(final long bookId, final int numberOfSimilarity) throws IOException, TasteException {

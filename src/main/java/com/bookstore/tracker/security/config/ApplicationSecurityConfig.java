@@ -23,6 +23,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * Configuration class for the security of the application.
  */
 @Profile("!test")
 @Configuration
