@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class helps to generate some Response messages to send to the user.
  */
 @Data
 @AllArgsConstructor

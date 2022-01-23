@@ -14,11 +14,16 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This service is useful for the recommendation System functionality.
  */
 @Service
 @Slf4j
 public class BookViewMappingServiceImpl implements BookViewMappingService {
 
+    /**
+     * @see com.bookstore.tracker.service.book.BookViewMappingService#writeFileLocally(String, List)
+     */
     @Override
     public void writeFileLocally(final String fileName,
                                  final List<BookViewMapping> dataList) throws IOException {

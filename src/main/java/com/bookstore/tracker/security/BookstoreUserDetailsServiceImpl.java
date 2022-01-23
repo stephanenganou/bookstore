@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class helps to retrieve user information specific for security purposes.
  */
 @Service
 public class BookstoreUserDetailsServiceImpl implements BookstoreUserDetailsService {
@@ -22,6 +24,9 @@ public class BookstoreUserDetailsServiceImpl implements BookstoreUserDetailsServ
         this.userDao = userDao;
     }
 
+    /**
+     * This method returns user information based upon the username field.
+     */
     @Override
     public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
         final User user = userDao.findByUserName(username);

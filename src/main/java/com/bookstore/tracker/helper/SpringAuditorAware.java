@@ -12,9 +12,14 @@ import java.util.Optional;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * Class playing the role of Entitylistener for Classes extending the class Auditable.
  */
 public class SpringAuditorAware implements AuditorAware<User> {
 
+    /**
+     * Method returning  an Optional<User> containing information about the logged user.
+     */
     @Override
     public Optional<User> getCurrentAuditor() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

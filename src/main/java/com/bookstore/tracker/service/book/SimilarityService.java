@@ -8,9 +8,14 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This interface enforces specifics methods (Book related) for classes which will implement it.
  */
 @Service
 public interface SimilarityService {
 
-    List<RecommendedItem> bookSimilarity(long bookId, int numberOfSimilarity);
+    /**
+     * Method responsible for rendering a list a recommended books for a specific book (by its id).
+     */
+    List<RecommendedItem> bookSimilarity(final long bookId, final int numberOfSimilarity);
 }

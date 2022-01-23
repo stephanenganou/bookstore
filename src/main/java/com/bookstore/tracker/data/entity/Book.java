@@ -43,6 +43,9 @@ public class Book extends Auditable<String> {
         this.price = price;
     }
 
+    /**
+     * Creates a new BookDto object based upon information of the calling object.
+     */
     public BookDto convertToDto() {
         return new BookDto(id, name, description, image, price);
     }

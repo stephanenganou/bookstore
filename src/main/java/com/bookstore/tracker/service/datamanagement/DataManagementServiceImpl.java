@@ -18,6 +18,8 @@ import java.util.List;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class handles the transfer of Data from csvFiles into the system.
  */
 @Service
 @Slf4j
@@ -31,6 +33,9 @@ public class DataManagementServiceImpl implements DataManagementService {
         this.bookDao = bookDao;
     }
 
+    /**
+     * @see com.bookstore.tracker.service.datamanagement.DataManagementService#save(MultipartFile)
+     */
     @Override
     public void save(final MultipartFile multipartFile) {
         if (DataManagementUtil.isMultipartFileValid(multipartFile)) {

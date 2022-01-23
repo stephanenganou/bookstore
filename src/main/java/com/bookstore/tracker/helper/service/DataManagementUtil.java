@@ -15,18 +15,26 @@ import java.util.Objects;
 /**
  * @author Stephane Nganou
  * @version 1.0
+ * <p>
+ * This class helps in supporting the traffic of Data.
  */
 @Slf4j
 public final class DataManagementUtil {
 
     private static final String[] VALID_HEADERS = {"text/.csv", "application/vnd.ms-excel"};
 
+    /**
+     * This method checks if a given MultipartFile is valid.
+     */
     public static boolean isMultipartFileValid(final MultipartFile multipartFile) {
         log.info("File Contain Type: {}", multipartFile.getContentType());
         return Arrays.stream(VALID_HEADERS).anyMatch
                 (s -> Objects.requireNonNull(multipartFile.getContentType()).contains(s));
     }
 
+    /**
+     * This method extracts information or records in the csv file that has been inputed.
+     */
     public static List<Record> getRecordsFromCsvFile(final MultipartFile multipartFile) throws IOException {
         final InputStream inputStream = multipartFile.getInputStream();
         final CsvParserSettings csvParserSettings = new CsvParserSettings();
